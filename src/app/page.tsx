@@ -1,32 +1,119 @@
 import doctorImg from '../../public/doctor.png';
+import about from '../../public/about.png';
+import { FaUserDoctor } from 'react-icons/fa6';
+import { RiCalendarScheduleLine } from 'react-icons/ri';
+import { FcIdea } from 'react-icons/fc';
 
 export default function Home() {
   return (
-    <div className="flex bg-gradient-to-r from-blue-900 to-blue-600 w-full h-[500px]">
-      <div className="flex justify-center w-1/2 mt-64 sm:mt-20 md:mt-40 lg:mt-48 xl:mt-14">
-        <svg viewBox="0 0 200 200" xmlns="http://www.w3.org/2000/svg">
-          <defs></defs>
-          <path
-            fill="#FFFFFF"
-            d="M46.2,-79.8C60.2,-71.9,72.1,-60.2,79.1,-46.3C86.1,-32.3,88.2,-16.2,88.2,0C88.3,16.2,86.2,32.4,79.4,46.7C72.6,60.9,61,73.4,47,81.6C33,89.9,16.5,94,0.2,93.6C-16.1,93.3,-32.2,88.5,-45.8,80C-59.4,71.5,-70.4,59.3,-78,45.3C-85.6,31.4,-89.7,15.7,-89.9,-0.1C-90,-15.9,-86.2,-31.7,-78.7,-45.8C-71.2,-59.9,-60,-72.3,-46.3,-80.3C-32.6,-88.3,-16.3,-92,-0.1,-91.8C16.1,-91.7,32.2,-87.7,46.2,-79.8Z"
-            transform="translate(100 100)"
-          />
-          <image href={doctorImg.src} x="-15" y="10" width="250" height="250" />
-        </svg>
+    <>
+      <div className="flex bg-gradient-to-r from-blue-900 to-blue-600 w-full h-[500px]">
+        <div className="flex justify-center w-1/2 mt-64 sm:mt-20 md:mt-40 lg:mt-48 xl:mt-14">
+          <svg viewBox="0 0 200 200" xmlns="http://www.w3.org/2000/svg">
+            <defs></defs>
+            <path
+              fill="#FFFFFF"
+              d="M46.2,-79.8C60.2,-71.9,72.1,-60.2,79.1,-46.3C86.1,-32.3,88.2,-16.2,88.2,0C88.3,16.2,86.2,32.4,79.4,46.7C72.6,60.9,61,73.4,47,81.6C33,89.9,16.5,94,0.2,93.6C-16.1,93.3,-32.2,88.5,-45.8,80C-59.4,71.5,-70.4,59.3,-78,45.3C-85.6,31.4,-89.7,15.7,-89.9,-0.1C-90,-15.9,-86.2,-31.7,-78.7,-45.8C-71.2,-59.9,-60,-72.3,-46.3,-80.3C-32.6,-88.3,-16.3,-92,-0.1,-91.8C16.1,-91.7,32.2,-87.7,46.2,-79.8Z"
+              transform="translate(100 100)"
+            />
+            <image
+              href={doctorImg.src}
+              x="-15"
+              y="10"
+              width="250"
+              height="250"
+            />
+          </svg>
+        </div>
+        <div className="mt-24 w-1/2  text-teal-50">
+          <h1 className="text-6xl font-bold">
+            The Best Reliable <br />
+            Medical Service
+          </h1>
+          <span className="text-xl mt-2 block">
+            Stay on top of your health by connecting with
+            <br /> your doctor and easily schelduling a check-up
+          </span>
+          <button className="bg-yellow-50 hover:bg-yellow-200 text-blue-700 mt-4 px-5 py-2 rounded-md">
+            Make an Appointment
+          </button>
+        </div>
       </div>
-      <div className="mt-24 w-1/2  text-teal-50">
-        <h1 className="text-6xl font-bold">
-          The Best Reliable <br />
-          Medical Service
-        </h1>
-        <span className="text-xl mt-2 block">
-          Stay on top of your health by connecting with
-          <br /> your doctor and easily schelduling a check-up
+      <div className="w-full text-center m-10">
+        <h2 className="text-3xl font-bold">How it Works?</h2>
+        <span className="text-gray-500 font-medium">
+          4 steps to get your solution
         </span>
-        <button className="bg-yellow-50 hover:bg-yellow-200 text-blue-700 mt-4 px-5 py-2 rounded-md">
-          Make an Appointment
-        </button>
       </div>
-    </div>
+      <div className="w-full flex justify-around content-between m-5">
+        <div className="w-50 h-30 flex justify-center flex-wrap">
+          <FaUserDoctor className="w-8 h-8 text-neutral-700" />
+          <span className="w-full text-xl text-center font-medium">
+            Search Doctor
+          </span>
+          <span className="w-full text-gray-500 text-center font-medium">
+            Keeping you healthy is our high periority
+          </span>
+        </div>
+        <div className="w-50 h-30 flex justify-center flex-wrap">
+          <FaUserDoctor className="w-8 h-8 text-neutral-700" />
+          <span className="w-full text-xl text-center font-medium">
+            Search Doctor
+          </span>
+          <span className="w-full text-gray-500 text-center font-medium">
+            Keeping you healthy is our high periority
+          </span>
+        </div>
+        <div className="w-50 h-30 flex justify-center flex-wrap">
+          <RiCalendarScheduleLine className="w-8 h-8 text-neutral-700" />
+          <span className="w-full text-xl text-center font-medium">
+            Search Doctor
+          </span>
+          <span className="w-full text-gray-500 text-center font-medium">
+            Keeping you healthy is our high periority
+          </span>
+        </div>
+        <div className="w-50 h-30 flex justify-center flex-wrap">
+          <FcIdea className="w-8 h-8 text-neutral-700" />
+          <span className="w-full text-xl text-center font-medium">
+            Search Doctor
+          </span>
+          <span className="w-full text-gray-500 text-center font-medium">
+            Keeping you healthy is our high periority
+          </span>
+        </div>
+      </div>
+      <div className="w-full flex justify-between">
+        <div className="flex justify-center w-1/2 mt-64 sm:mt-20 md:mt-40 lg:mt-48 xl:mt-14">
+          <svg viewBox="0 0 200 200" xmlns="http://www.w3.org/2000/svg">
+            <defs></defs>
+            <path
+              fill="#E8DAFF"
+              d="M45.2,-63.6C58,-53,67.3,-38.9,73,-23.3C78.7,-7.6,80.9,9.7,76.7,25.7C72.6,41.6,62.1,56.3,48.2,65C34.4,73.8,17.2,76.6,-0.4,77.2C-18.1,77.8,-36.1,76.2,-48.5,67C-60.8,57.8,-67.5,40.9,-73.4,23.6C-79.3,6.3,-84.4,-11.4,-81.8,-28.7C-79.1,-46.1,-68.7,-63.1,-53.7,-73C-38.8,-82.9,-19.4,-85.7,-1.6,-83.5C16.2,-81.3,32.5,-74.2,45.2,-63.6Z"
+              transform="translate(100 100)"
+            />
+            <image href={about.src} x="15" y="9" width="180" height="180" />
+          </svg>
+        </div>
+        <div className="flex justify-center items-center flex-wrap w-1/2">
+          <h1 className="text-5xl w-full font-bold">About Us</h1>
+          <span className="w-full text-2xl pb-20">
+            At Medical Center, we make healthcare more accessible by connecting
+            you with top doctors effortlessly. Our platform provides a simple
+            and reliable way to book medical appointments, ensuring timely
+            consultations with trusted professionals. We are committed to
+            offering a seamless booking experience, a network of certified
+            doctors, and complete privacy and security for your health data.
+            Whether you need a consultation, a follow-up, or a specialist visit,
+            Medical Center is here for you anytime, anywhere. Your health is our
+            priority, and we are dedicated to making healthcare easier and more
+            convenient for everyone.
+          </span>
+        </div>
+      </div>
+      <div className="flex justify-center items-center flex-wrap w-1/2">
+        <h1 className="text-5xl w-full font-bold">Doctor</h1>
+      </div>
+    </>
   );
 }

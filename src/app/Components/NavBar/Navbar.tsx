@@ -4,7 +4,7 @@ import { FaBriefcaseMedical } from 'react-icons/fa';
 const Navbar = () => {
   return (
     <div className="sticky flex justify-around w-full h-16 bg-gradient-to-r from-blue-900 to-blue-600">
-      <div className="flex justify-center items-center text-yellow-100 text-xl">
+      <div className="flex justify-center items-center text-yellow-100 hover:text-yellow-200 text-xl cursor-pointer">
         <FaBriefcaseMedical className="mr-2" />
         MedicalCenter
       </div>
