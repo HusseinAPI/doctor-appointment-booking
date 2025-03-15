@@ -1,10 +1,60 @@
 import doctorImg from '../../public/doctor.png';
 import about from '../../public/about.png';
+import doctor101 from '../../public/doctor101.jpg';
+import doctor102 from '../../public/doctor102.jpg';
+import doctor103 from '../../public/doctor103.avif';
+import doctor104 from '../../public/doctor104.jpg';
+import doctor105 from '../../public/doctor105.avif';
 import { FaUserDoctor } from 'react-icons/fa6';
 import { RiCalendarScheduleLine } from 'react-icons/ri';
 import { FcIdea } from 'react-icons/fc';
+import ContactUs from './Components/ContactsUs/ContactUs';
+import Image from 'next/image';
 
 export default function Home() {
+  const doctors = [
+    {
+      name: 'Dr. Nahidul Islam',
+      specialty: 'Cardiology',
+      rating: 124,
+      location: 'Georgia, USA',
+      buttonColor: 'bg-blue-100 text-blue-600',
+      image: doctor101.src,
+    },
+    {
+      name: 'Dr. Roksana Louwis',
+      specialty: 'Hematology',
+      rating: 124,
+      location: 'Georgia, USA',
+      buttonColor: 'bg-green-100 text-green-600',
+      image: doctor102.src,
+    },
+    {
+      name: 'Dr. Towkib Tanvir',
+      specialty: 'Pulmonology',
+      rating: 124,
+      location: 'Georgia, USA',
+      buttonColor: 'bg-teal-100 text-teal-600',
+      image: doctor103.src,
+    },
+    {
+      name: 'Dr. Nasai Eshal',
+      specialty: 'Heart Diseases',
+      rating: 124,
+      location: 'Georgia, USA',
+      buttonColor: 'bg-lime-100 text-lime-600',
+      image: doctor104.src,
+    },
+    {
+      name: 'Dr. Nasai Eshal',
+      specialty: 'Heart Diseases',
+      rating: 124,
+      location: 'Georgia, USA',
+      buttonColor: 'bg-lime-100 text-lime-600',
+      image: doctor105.src,
+    },
+  ];
+
   return (
     <>
       <div className="flex bg-gradient-to-r from-blue-900 to-blue-600 w-full h-[500px]">
@@ -26,27 +76,27 @@ export default function Home() {
           </svg>
         </div>
         <div className="mt-24 w-1/2  text-teal-50">
-          <h1 className="text-6xl font-bold">
+          <h1 className="text-5xl sm:text-5xl md:text-6xl font-bold">
             The Best Reliable <br />
             Medical Service
           </h1>
-          <span className="text-xl mt-2 block">
+          <span className="text-base md:text-lg lg:text-lg mt-2 block">
             Stay on top of your health by connecting with
             <br /> your doctor and easily schelduling a check-up
           </span>
-          <button className="bg-yellow-50 hover:bg-yellow-200 text-blue-700 mt-4 px-5 py-2 rounded-md">
+          <button className="bg-yellow-50 hover:bg-yellow-200 text-blue-700 mt-4 px-5 py-2 rounded-md transition">
             Make an Appointment
           </button>
         </div>
       </div>
-      <div className="w-full text-center m-10">
+      <div className="text-center m-10">
         <h2 className="text-3xl font-bold">How it Works?</h2>
         <span className="text-gray-500 font-medium">
           4 steps to get your solution
         </span>
       </div>
-      <div className="w-full flex justify-around content-between m-5">
-        <div className="w-50 h-30 flex justify-center flex-wrap">
+      <div className="flex justify-around content-between m-5">
+        <div className="w-55 h-30 flex justify-center flex-wrap">
           <FaUserDoctor className="w-8 h-8 text-neutral-700" />
           <span className="w-full text-xl text-center font-medium">
             Search Doctor
@@ -55,31 +105,31 @@ export default function Home() {
             Keeping you healthy is our high periority
           </span>
         </div>
-        <div className="w-50 h-30 flex justify-center flex-wrap">
+        <div className="w-55 h-30 flex justify-center flex-wrap">
           <FaUserDoctor className="w-8 h-8 text-neutral-700" />
           <span className="w-full text-xl text-center font-medium">
-            Search Doctor
+            Select Doctor
           </span>
           <span className="w-full text-gray-500 text-center font-medium">
-            Keeping you healthy is our high periority
+            Choose doctor from our list of many doctors
           </span>
         </div>
-        <div className="w-50 h-30 flex justify-center flex-wrap">
+        <div className="w-55 h-30 flex justify-center flex-wrap">
           <RiCalendarScheduleLine className="w-8 h-8 text-neutral-700" />
           <span className="w-full text-xl text-center font-medium">
-            Search Doctor
+            Schedule Appointment
           </span>
           <span className="w-full text-gray-500 text-center font-medium">
-            Keeping you healthy is our high periority
+            Schedule an appointment with variable dates
           </span>
         </div>
-        <div className="w-50 h-30 flex justify-center flex-wrap">
+        <div className="w-55 h-30 flex justify-center flex-wrap">
           <FcIdea className="w-8 h-8 text-neutral-700" />
           <span className="w-full text-xl text-center font-medium">
-            Search Doctor
+            Get Solution
           </span>
           <span className="w-full text-gray-500 text-center font-medium">
-            Keeping you healthy is our high periority
+            Get best solution for your requirements
           </span>
         </div>
       </div>
@@ -111,9 +161,37 @@ export default function Home() {
           </span>
         </div>
       </div>
-      <div className="flex justify-center items-center flex-wrap w-1/2">
+      <div className="flex justify-between items-center flex-wrap w-full p-20">
         <h1 className="text-5xl w-full font-bold">Doctor</h1>
+        {doctors.map((doctor, index) => (
+          <div
+            key={index}
+            className="bg-white shadow-lg rounded-2xl mt-5 p-5 flex flex-col items-center"
+          >
+            <Image
+              src={doctor.image}
+              alt={doctor.name}
+              width={200}
+              height={200}
+              className="w-full h-56 object-cover rounded-t-lg"
+            />
+            <span
+              className={`px-3 py-1 rounded-full text-sm font-medium ${doctor.buttonColor}`}
+            >
+              {doctor.specialty}
+            </span>
+            <h3 className="text-xl font-semibold mt-2">{doctor.name}</h3>
+            <div className="flex items-center gap-1 text-gray-600 mt-1">
+              <span className="text-sm">⭐ ({doctor.rating})</span>
+            </div>
+            <p className="text-gray-500 text-sm mt-2">{doctor.location}</p>
+            <button className="mt-4 px-4 py-2 text-blue-600 font-semibold border border-blue-600 rounded-lg hover:bg-blue-600 hover:text-white transition">
+              Book An Appointment
+            </button>
+          </div>
+        ))}
       </div>
+      <ContactUs />
     </>
   );
 }
