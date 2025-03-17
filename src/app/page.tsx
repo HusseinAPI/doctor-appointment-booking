@@ -76,7 +76,7 @@ export default function Home() {
           </svg>
         </div>
         <div className="mt-24 w-1/2  text-teal-50">
-          <h1 className="text-5xl sm:text-5xl md:text-6xl font-bold">
+          <h1 className=" text-4xl sm:text-5xl md:text-6xl font-bold">
             The Best Reliable <br />
             Medical Service
           </h1>
@@ -84,7 +84,7 @@ export default function Home() {
             Stay on top of your health by connecting with
             <br /> your doctor and easily schelduling a check-up
           </span>
-          <button className="bg-yellow-50 hover:bg-yellow-200 text-blue-700 mt-4 px-5 py-2 rounded-md transition">
+          <button className="bg-yellow-50 hover:bg-yellow-200 text-blue-700 mt-4 px-2 sm:px-5 py-2 rounded-md transition">
             Make an Appointment
           </button>
         </div>
@@ -95,8 +95,8 @@ export default function Home() {
           4 steps to get your solution
         </span>
       </div>
-      <div className="flex justify-around content-between m-5">
-        <div className="w-55 h-30 flex justify-center flex-wrap">
+      <div className="flex flex-wrap justify-around content-between m-5">
+        <div className="w-55 h-30 mt-5 flex justify-center flex-wrap">
           <FaUserDoctor className="w-8 h-8 text-neutral-700" />
           <span className="w-full text-xl text-center font-medium">
             Search Doctor
@@ -105,7 +105,7 @@ export default function Home() {
             Keeping you healthy is our high periority
           </span>
         </div>
-        <div className="w-55 h-30 flex justify-center flex-wrap">
+        <div className="w-55 h-30 mt-5 flex justify-center flex-wrap">
           <FaUserDoctor className="w-8 h-8 text-neutral-700" />
           <span className="w-full text-xl text-center font-medium">
             Select Doctor
@@ -114,7 +114,7 @@ export default function Home() {
             Choose doctor from our list of many doctors
           </span>
         </div>
-        <div className="w-55 h-30 flex justify-center flex-wrap">
+        <div className="w-55 h-30 mt-5 flex justify-center flex-wrap">
           <RiCalendarScheduleLine className="w-8 h-8 text-neutral-700" />
           <span className="w-full text-xl text-center font-medium">
             Schedule Appointment
@@ -123,7 +123,7 @@ export default function Home() {
             Schedule an appointment with variable dates
           </span>
         </div>
-        <div className="w-55 h-30 flex justify-center flex-wrap">
+        <div className="w-55 h-30 mt-5 flex justify-center flex-wrap">
           <FcIdea className="w-8 h-8 text-neutral-700" />
           <span className="w-full text-xl text-center font-medium">
             Get Solution
@@ -133,8 +133,8 @@ export default function Home() {
           </span>
         </div>
       </div>
-      <div className="w-full flex justify-between">
-        <div className="flex justify-center w-1/2 mt-64 sm:mt-20 md:mt-40 lg:mt-48 xl:mt-14">
+      <div className="w-full flex flex-wrap justify-between">
+        <div className="flex justify-center w-full sm:w-1/2 mt-20 md:mt-40 lg:mt-48 xl:mt-14">
           <svg viewBox="0 0 200 200" xmlns="http://www.w3.org/2000/svg">
             <defs></defs>
             <path
@@ -145,9 +145,9 @@ export default function Home() {
             <image href={about.src} x="15" y="9" width="180" height="180" />
           </svg>
         </div>
-        <div className="flex justify-center items-center flex-wrap w-1/2">
-          <h1 className="text-5xl w-full font-bold">About Us</h1>
-          <span className="w-full text-2xl pb-20">
+        <div className="flex justify-center items-center flex-wrap sm:mt-50 xl:mt-20 w-full sm:w-1/2">
+          <h1 className="px-20 sm:px-0 text-5xl w-full font-bold">About Us</h1>
+          <span className="w-full px-20 sm:px-0 py-10 sm:py-0  text-2xl sm:text-base md:text-xl lg:text-2xl sm:mt-5 pb-20">
             At Medical Center, we make healthcare more accessible by connecting
             you with top doctors effortlessly. Our platform provides a simple
             and reliable way to book medical appointments, ensuring timely
@@ -161,12 +161,12 @@ export default function Home() {
           </span>
         </div>
       </div>
-      <div className="flex justify-between items-center flex-wrap w-full p-20">
+      <div className="flex justify-center sm:justify-between items-center flex-wrap w-full p-20">
         <h1 className="text-5xl w-full font-bold">Doctor</h1>
         {doctors.map((doctor, index) => (
           <div
             key={index}
-            className="bg-white shadow-lg rounded-2xl mt-5 p-5 flex flex-col items-center"
+            className="w-3/5 sm:w-max bg-white shadow-lg rounded-2xl mt-5 p-5 flex flex-col items-center"
           >
             <Image
               src={doctor.image}

@@ -2,11 +2,12 @@
 import React, { useState } from 'react';
 import { FaBriefcaseMedical } from 'react-icons/fa';
 import { TiThMenu } from 'react-icons/ti';
+import { IoClose } from 'react-icons/io5';
 
 const Navbar = () => {
   const [openSidebar, setSideBar] = useState(false);
   return (
-    <div className="sticky flex justify-between md:justify-around w-full h-16 bg-gradient-to-r from-blue-900 to-blue-600">
+    <div className="fixed flex justify-between md:justify-around w-full h-16 bg-gradient-to-r from-blue-900 to-blue-600">
       <div className="flex justify-center items-center mx-5 text-yellow-100 hover:text-yellow-200 text-xl cursor-pointer">
         <FaBriefcaseMedical className="mr-2" />
         MedicalCenter
@@ -24,17 +25,23 @@ const Navbar = () => {
         </div>
         {/*Mobile NavBar*/}
         {openSidebar ? (
-          <div className="h-80 flex justify-center md:hidden flex-wrap items-center rounded-lg bg-teal-900">
-            <span className="w-full text-center hover:bg-teal-300 hover:text-blue-600">
+          <div className="h-80 flex justify-center md:hidden flex-wrap items-center rounded-lg bg-teal-900 transition">
+            <div className="w-full flex justify-end px-5">
+              <IoClose
+                className="hover:bg-yellow-200 mt-1 cursor-pointer w-7 h-7"
+                onClick={() => setSideBar(false)}
+              />
+            </div>
+            <span className="w-2/3 text-center p-2 rounded-lg hover:bg-teak-300 hover:text-blue-600">
               Home
             </span>
-            <span className="w-full text-center hover:bg-teal-300 hover:text-blue-600">
+            <span className="w-2/3 text-center hover:bg-teal-300 hover:text-blue-600">
               About Us
             </span>
-            <span className="w-full text-center hover:bg-teal-300 hover:text-blue-600">
+            <span className="w-2/3 text-center hover:bg-teal-300 hover:text-blue-600">
               Doctors
             </span>
-            <span className="w-full text-center hover:bg-teal-300 hover:text-blue-600">
+            <span className="w-2/3 text-center hover:bg-teal-300 hover:text-blue-600">
               Contact Us
             </span>
             <button className="w-2/3 bg-yellow-50 hover:bg-yellow-200 text-blue-700 mt-4 px-20 py-2 rounded-md transition">
