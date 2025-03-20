@@ -2,7 +2,10 @@ import React from 'react';
 
 const ContactUs = () => {
   return (
-    <div className="bg-gradient-to-r from-blue-900 to-blue-600 py-16 px-6 text-white">
+    <div
+      id="contactUs"
+      className="bg-gradient-to-r from-blue-900 to-blue-600 py-16 px-6 text-white"
+    >
       <div className="max-w-6xl mx-auto text-center">
         <h2 className="text-4xl font-bold mb-4">Get In Touch</h2>
         <p className="text-lg text-gray-200">

@@ -8,7 +8,6 @@ import doctor105 from '../../public/doctor105.avif';
 import { FaUserDoctor } from 'react-icons/fa6';
 import { RiCalendarScheduleLine } from 'react-icons/ri';
 import { FcIdea } from 'react-icons/fc';
-import ContactUs from './Components/ContactsUs/ContactUs';
 import Image from 'next/image';
 
 export default function Home() {
@@ -57,7 +56,10 @@ export default function Home() {
 
   return (
     <>
-      <div className="flex bg-gradient-to-r from-blue-900 to-blue-600 w-full h-[500px]">
+      <div
+        id="home"
+        className="flex bg-gradient-to-r from-blue-900 to-blue-600 w-full h-[500px]"
+      >
         <div className="flex justify-center w-1/2 mt-64 sm:mt-20 md:mt-40 lg:mt-48 xl:mt-14">
           <svg viewBox="0 0 200 200" xmlns="http://www.w3.org/2000/svg">
             <defs></defs>
@@ -145,7 +147,10 @@ export default function Home() {
             <image href={about.src} x="15" y="9" width="180" height="180" />
           </svg>
         </div>
-        <div className="flex justify-center items-center flex-wrap sm:mt-50 xl:mt-20 w-full sm:w-1/2">
+        <div
+          id="aboutUs"
+          className="flex justify-center items-center flex-wrap sm:mt-50 xl:mt-20 w-full sm:w-1/2"
+        >
           <h1 className="px-20 sm:px-0 text-5xl w-full font-bold">About Us</h1>
           <span className="w-full px-20 sm:px-0 py-10 sm:py-0  text-2xl sm:text-base md:text-xl lg:text-2xl sm:mt-5 pb-20">
             At Medical Center, we make healthcare more accessible by connecting
@@ -191,7 +196,6 @@ export default function Home() {
           </div>
         ))}
       </div>
-      <ContactUs />
     </>
   );
 }

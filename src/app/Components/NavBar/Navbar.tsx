@@ -3,6 +3,7 @@ import React, { useState } from 'react';
 import { FaBriefcaseMedical } from 'react-icons/fa';
 import { TiThMenu } from 'react-icons/ti';
 import { IoClose } from 'react-icons/io5';
+import Link from 'next/link';
 
 const Navbar = () => {
   const [openSidebar, setSideBar] = useState(false);
@@ -15,10 +16,18 @@ const Navbar = () => {
       <div className="m-4 w-fit md:w-1/2 lg:w-5/12 h-max text-teal-50">
         {/*Desktop NavBar*/}
         <div className="hidden md:flex justify-between items-center">
-          <span className="hover:text-teal-300">Home</span>
-          <span className="hover:text-teal-300">About Us</span>
-          <span className="hover:text-teal-300">Doctors</span>
-          <span className="hover:text-teal-300">Contact Us</span>
+          <span className="hover:text-teal-300">
+            <Link href="/">Home</Link>
+          </span>
+          <span className="hover:text-teal-300">
+            <Link href="/#aboutUs">About Us</Link>
+          </span>
+          <span className="hover:text-teal-300">
+            <Link href="/doctors">Doctors</Link>
+          </span>
+          <span className="hover:text-teal-300">
+            <Link href="/#contactUs">Contact Us</Link>
+          </span>
           <span className="bg-yellow-50 hover:bg-yellow-200 text-blue-700 px-5 py-2 rounded-xl transition">
             login
           </span>
@@ -33,16 +42,16 @@ const Navbar = () => {
               />
             </div>
             <span className="w-2/3 text-center p-2 rounded-lg hover:bg-teak-300 hover:text-blue-600">
-              Home
+              <Link href="/">Home</Link>
             </span>
             <span className="w-2/3 text-center hover:bg-teal-300 hover:text-blue-600">
-              About Us
+              <Link href="/#aboutUs">About Us</Link>
             </span>
             <span className="w-2/3 text-center hover:bg-teal-300 hover:text-blue-600">
-              Doctors
+              <Link href="/doctors">Doctors</Link>
             </span>
             <span className="w-2/3 text-center hover:bg-teal-300 hover:text-blue-600">
-              Contact Us
+              <Link href="/#contactUs">Contact Us</Link>
             </span>
             <button className="w-2/3 bg-yellow-50 hover:bg-yellow-200 text-blue-700 mt-4 px-20 py-2 rounded-md transition">
               Login
