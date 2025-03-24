@@ -8,7 +8,7 @@ import Link from 'next/link';
 const Navbar = () => {
   const [openSidebar, setSideBar] = useState(false);
   return (
-    <div className="fixed flex justify-between md:justify-around w-full h-16 bg-gradient-to-r from-blue-900 to-blue-600">
+    <div className="fixed top-0 flex justify-between md:justify-around w-full h-16 bg-gradient-to-r from-blue-900 to-blue-600">
       <div className="flex justify-center items-center mx-5 text-yellow-100 hover:text-yellow-200 text-xl cursor-pointer">
         <FaBriefcaseMedical className="mr-2" />
         MedicalCenter
@@ -29,7 +29,7 @@ const Navbar = () => {
             <Link href="/#contactUs">Contact Us</Link>
           </span>
           <span className="bg-yellow-50 hover:bg-yellow-200 text-blue-700 px-5 py-2 rounded-xl transition">
-            login
+            <Link href="/auth/signup">login</Link>
           </span>
         </div>
         {/*Mobile NavBar*/}
