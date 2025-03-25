@@ -3,6 +3,7 @@ import { Geist, Geist_Mono } from 'next/font/google';
 import './globals.css';
 import Navbar from './Components/NavBar/Navbar';
 import ContactUs from './Components/ContactsUs/ContactUs';
+import SideBar from './Components/SideBar/SideBar';
 
 const geistSans = Geist({
   variable: '--font-geist-sans',
@@ -24,6 +25,8 @@ export default function RootLayout({
 }: Readonly<{
   children: React.ReactNode;
 }>) {
+  const user: boolean = false;
+
   return (
     <html lang="en">
       <body
@@ -33,9 +36,9 @@ export default function RootLayout({
             ' "General Sans", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol"',
         }}
       >
-        <Navbar />
+        {user ? <SideBar /> : <Navbar />}
         {children}
-        <ContactUs />
+        {user ? null : <ContactUs />}
       </body>
     </html>
   );

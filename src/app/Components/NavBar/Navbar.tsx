@@ -29,7 +29,7 @@ const Navbar = () => {
             <Link href="/#contactUs">Contact Us</Link>
           </span>
           <span className="bg-yellow-50 hover:bg-yellow-200 text-blue-700 px-5 py-2 rounded-xl transition">
-            <Link href="/auth/signup">login</Link>
+            <Link href="/auth/signin">login</Link>
           </span>
         </div>
         {/*Mobile NavBar*/}
@@ -54,7 +54,7 @@ const Navbar = () => {
               <Link href="/#contactUs">Contact Us</Link>
             </span>
             <button className="w-2/3 bg-yellow-50 hover:bg-yellow-200 text-blue-700 mt-4 px-20 py-2 rounded-md transition">
-              Login
+              <Link href="/auth/signin">Login</Link>
             </button>
           </div>
         ) : (

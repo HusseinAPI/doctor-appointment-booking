@@ -1,7 +1,9 @@
+import Link from 'next/link';
+
 const SignIn = () => {
   return (
-    <div className="flex justify-center w-3/4 my-20 ml-48 p-8">
-      <div className="w-1/2 bg-white p-10 rounded-lg shadow-lg flex flex-col justify-center">
+    <div className="flex justify-center w-full my-20 p-8">
+      <div className="w-full sm:w-8/12 lg:w-6/12 xl:w-4/12 bg-white p-10 rounded-lg shadow-lg flex flex-col justify-center">
         <h2 className="text-2xl font-bold mb-6">
           Login as <span className="text-blue-600">Medical Center</span>
         </h2>
@@ -35,6 +37,15 @@ const SignIn = () => {
             Login
           </button>
         </form>
+        <p className="text-center text-sm mt-4">
+          Don't have an account?
+          <Link
+            href="/auth/signup"
+            className="text-blue-600 font-semibold hover:underline"
+          >
+            Sign Up
+          </Link>
+        </p>
       </div>
     </div>
   );

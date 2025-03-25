@@ -1,11 +1,12 @@
+import Link from 'next/link';
 import { FaHospital } from 'react-icons/fa6';
 import { GiMicroscope } from 'react-icons/gi';
 import { HiClipboardList } from 'react-icons/hi';
 
 const SignUp = () => {
   return (
-    <div className="flex justify-center w-3/4 my-20 ml-48 p-8">
-      <div className="bg-gradient-to-r from-blue-900 to-blue-600 w-1/2 text-white flex flex-col justify-center p-10 space-y-6">
+    <div className="flex justify-center w-full my-20 p-8">
+      <div className="hidden lg:flex flex-col justify-center bg-gradient-to-r from-blue-900 to-blue-600 text-white p-10 space-y-6">
         <div className="flex">
           <div className="w-20 h-20 ">
             <FaHospital className="w-16 h-16" />
@@ -41,7 +42,7 @@ const SignUp = () => {
         </div>
       </div>
 
-      <div className="w-1/2 bg-white p-10 rounded-lg shadow-lg flex flex-col justify-center">
+      <div className="w-full sm:w-8/12 lg:w-6/12 xl:w-4/12 bg-white p-10 rounded-lg shadow-lg flex flex-col justify-center">
         <h2 className="text-2xl font-bold mb-6">
           Sign up as <span className="text-blue-600">Medical Center</span>
         </h2>
@@ -94,7 +95,10 @@ const SignUp = () => {
             <input type="checkbox" id="terms" className="w-4 h-4" />
             <label htmlFor="terms" className="text-sm">
               I agree with all
-              <span className="text-blue-600">Terms and Conditions</span> and
+              <span className="text-blue-600">
+                {' '}
+                Terms and Conditions
+              </span> and{' '}
               <span className="text-blue-600">Privacy Policies</span>.
             </label>
           </div>
@@ -103,6 +107,16 @@ const SignUp = () => {
             Sign Up
           </button>
         </form>
+        <p className="text-center text-sm mt-4">
+          Already have an account?
+          <Link
+            href="/auth/signin"
+            className="text-blue-600 font-semibold hover:underline"
+          >
+            {' '}
+            Login
+          </Link>
+        </p>
       </div>
     </div>
   );
