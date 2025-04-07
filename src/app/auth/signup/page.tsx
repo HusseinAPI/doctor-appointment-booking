@@ -6,7 +6,7 @@ import { HiClipboardList } from 'react-icons/hi';
 const SignUp = () => {
   return (
     <div className="flex justify-center w-full my-20 p-8">
-      <div className="hidden lg:flex flex-col justify-center bg-gradient-to-r from-blue-900 to-blue-600 text-white p-10 space-y-6">
+      <div className="hidden lg:flex flex-col justify-center rounded-l-lg bg-gradient-to-r from-blue-900 to-blue-600 text-white p-10 space-y-6">
         <div className="flex">
           <div className="w-20 h-20 ">
             <FaHospital className="w-16 h-16" />
@@ -42,7 +42,7 @@ const SignUp = () => {
         </div>
       </div>
 
-      <div className="w-full sm:w-8/12 lg:w-6/12 xl:w-4/12 bg-white p-10 rounded-lg shadow-lg flex flex-col justify-center">
+      <div className="w-full sm:w-8/12 lg:w-6/12 xl:w-4/12 bg-white p-10 rounded-r-lg shadow-lg flex flex-col justify-center">
         <h2 className="text-2xl font-bold mb-6">
           Sign up as <span className="text-blue-600">Medical Center</span>
         </h2>
