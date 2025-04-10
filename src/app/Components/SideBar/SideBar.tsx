@@ -1,11 +1,7 @@
 import React from 'react';
 import { FaBriefcaseMedical, FaUserEdit } from 'react-icons/fa';
 import { MdDashboard } from 'react-icons/md';
-import {
-  FaRegCalendarCheck,
-  FaUserDoctor,
-  FaClipboardList,
-} from 'react-icons/fa6';
+import { FaRegCalendarCheck, FaClipboardList } from 'react-icons/fa6';
 import { ImProfile } from 'react-icons/im';
 import Link from 'next/link';
 
@@ -24,13 +20,6 @@ const SideBar = () => {
           <div className="flex justify-center items-center w-12 h-12 hover:bg-blue-700 cursor-pointer rounded-2xl transition">
             <Link href="/user/dashboard">
               <MdDashboard className="w-7 h-7 text-amber-100" />
-            </Link>
-          </div>
-        </div>
-        <div className="w-full flex ml-5" title="doctors">
-          <div className="flex justify-center items-center w-12 h-12 hover:bg-blue-700 cursor-pointer rounded-2xl transition">
-            <Link href="/doctors">
-              <FaUserDoctor className="w-7 h-7 text-amber-100" />
             </Link>
           </div>
         </div>

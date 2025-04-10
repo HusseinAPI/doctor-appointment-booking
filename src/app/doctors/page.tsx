@@ -69,7 +69,7 @@ const Doctors = () => {
         <select
           value={filter}
           onChange={(e) => setFilter(e.target.value)}
-          className="p-2 border rounded-lg focus:ring focus:ring-blue-300"
+          className="p-2 border border-blue-600 text-blue-600 rounded-lg focus:ring focus:ring-blue-300"
         >
           {specialties.map((specialty) => (
             <option key={specialty} value={specialty}>
