@@ -4,14 +4,12 @@ import dayjs, { Dayjs } from 'dayjs';
 import DoctorCard from '../../../Components/DoctorCard/DoctorCard';
 import Calendar from '../../../Components/Calendar/Calendar';
 import DateTimeSelector from '../../../Components/DateTimeSelector/DateTimeSelector';
+import AppointmentForm from '../../../Components/AppointmentForm/AppointmentForm';
 
 export default function Page() {
   const [currentDate, setCurrentDate] = useState(dayjs());
-  const [selectedDate, setSelectedDate] = useState<string>(
-    currentDate.format('D')
-  );
 
-  const times = ['10:30', '11:30', '12:30', '13:30', '14:30', '15:30', '16:00'];
+  // default and update dates function
 
   const defaultAndUpdateDates = (date: Dayjs) => {
     return Array.from({ length: 10 }, (_, i) => date.add(i, 'day'))
@@ -23,10 +21,17 @@ export default function Page() {
   const [dates, setDates] = useState<string[]>(
     defaultAndUpdateDates(currentDate)
   );
+  const [selectedDate, setSelectedDate] = useState<string>(
+    currentDate.format('D')
+  );
+
+  // default display dates of today
 
   useEffect(() => {
     setDates(defaultAndUpdateDates(currentDate));
   }, []);
+
+  // select day in calendar
 
   const handleSelectDay = (day: number) => {
     const selectDay = dayjs(
@@ -35,6 +40,10 @@ export default function Page() {
     setSelectedDate(selectDay.format('D'));
     setDates(defaultAndUpdateDates(selectDay));
   };
+
+  // display form of book a appointment
+
+  const [isOpen, setOpen] = useState<boolean>(false);
 
   return (
     <div className="rounded-l-2xl fixed overflow-auto left-20 rounded-4xl bg-blue-100 w-full h-full">
@@ -48,7 +57,8 @@ export default function Page() {
           onPrevMonth={() => setCurrentDate(currentDate.subtract(1, 'month'))}
         />
       </div>
-      <DateTimeSelector dates={dates} times={times} />
+      <DateTimeSelector dates={dates} setOpen={setOpen} />
+      <AppointmentForm isOpen={isOpen} setOpen={setOpen} />
     </div>
   );
 }

@@ -1,10 +1,12 @@
 export default function DateTimeSelector({
   dates,
-  times,
+  setOpen,
 }: {
   dates: string[];
-  times: string[];
+  setOpen: React.Dispatch<React.SetStateAction<boolean>>;
 }) {
+  const times = ['10:30', '11:30', '12:30', '13:30', '14:30', '15:30', '16:00'];
+
   return (
     <div className="bg-white w-full flex flex-wrap p-10">
       <h2 className="text-xl font-medium w-full mb-4 ml-12">
@@ -26,7 +28,10 @@ export default function DateTimeSelector({
               {times.map((time, index) => (
                 <div className="m-2" key={index}>
                   <div className="flex flex-wrap flex-col w-1/6">
-                    <button className="w-35 py-1 text-base rounded-lg bg-white border border-blue-600 text-blue-600 hover:bg-blue-600 hover:text-white  cursor-pointer">
+                    <button
+                      className="w-35 py-1 text-base rounded-lg bg-white border border-blue-600 text-blue-600 hover:bg-blue-600 hover:text-white  cursor-pointer"
+                      onClick={() => setOpen(true)}
+                    >
                       {time}
                     </button>
                   </div>
