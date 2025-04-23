@@ -32,19 +32,27 @@ const SideBar = () => {
         </div>
         <div className="w-full flex ml-5" title="profile">
           <div className="flex justify-center items-center w-12 h-12 hover:bg-blue-700 cursor-pointer rounded-2xl transition">
-            <ImProfile className="w-7 h-7 text-amber-100" />
+            <Link href={`/user/profile`}>
+              <ImProfile className="w-7 h-7 text-amber-100" />
+            </Link>
           </div>
         </div>
       </div>
+
+      {/* Admin  Pages*/}
       <div className="w-full h-2/12 mb-3 flex flex-wrap content-between">
         <div className="w-full flex ml-5" title="list of doctors">
           <div className="flex justify-center items-center w-12 h-12 hover:bg-blue-700 cursor-pointer rounded-2xl transition">
-            <FaUserEdit className="w-7 h-7 text-amber-100" />
+            <Link href={`/admin/doctorsmanagement`}>
+              <FaUserEdit className="w-7 h-7 text-amber-100" />
+            </Link>
           </div>
         </div>
         <div className="w-full flex ml-5" title="all appointments of patients">
           <div className="flex justify-center items-center w-12 h-12 hover:bg-blue-700 cursor-pointer rounded-2xl transition">
-            <FaClipboardList className="w-7 h-7 text-amber-100" />
+            <Link href={`/admin/appointmentsmanagement`}>
+              <FaClipboardList className="w-7 h-7 text-amber-100" />
+            </Link>
           </div>
         </div>
       </div>
