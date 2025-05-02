@@ -1,6 +1,7 @@
 import express from 'express';
 import dotenv from 'dotenv';
 import cors from 'cors';
+import userRouter from './routes/userRoutes.js';
 
 dotenv.config();
 
@@ -18,6 +19,8 @@ const corsOptions = {
 server.use(cors(corsOptions));
 server.use(express.json());
 server.use(express.urlencoded({ extended: true }));
+
+server.use('/api', userRouter);
 
 server.listen(PORT, () => {
   console.log(` Server running on http://localhost:${PORT}`);

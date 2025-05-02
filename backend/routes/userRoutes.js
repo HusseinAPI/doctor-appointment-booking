@@ -1,10 +1,10 @@
 import express from 'express';
 const router = express.Router();
 import bcrypt from 'bcrypt';
-import { User } from '../../../../models';
-import { generateToken } from '../utils';
+import User from '../models/user.js';
+import { generateToken } from '../utils.js';
 
-router.post('/signin', async (req, res) => {
+router.post('/auth/signin', async (req, res) => {
   const { email, password } = req.body;
 
   try {
@@ -31,7 +31,7 @@ router.post('/signin', async (req, res) => {
   }
 });
 
-router.post('/signup', async (req, res) => {
+router.post('/auth/signup', async (req, res) => {
   const { email, password } = req.body;
 
   try {
@@ -55,3 +55,5 @@ router.post('/signup', async (req, res) => {
     return res.status(500).json({ message: 'Server error', error });
   }
 });
+
+export default router;

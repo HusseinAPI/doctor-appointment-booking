@@ -1,6 +1,32 @@
+'use client';
+import { useRef } from 'react';
+import { useDispatch, useState } from 'react-redux';
 import Link from 'next/link';
+import { signIn } from '../../redux/userSlice';
 
 const SignIn = () => {
+  const email = useRef<HTMLInputElement>(null);
+  const password = useRef<HTMLInputElement>(null);
+
+  const dispatch = useDispatch();
+
+  const handleSubmit = (e: React.FormEvent) => {
+    e.preventDefault();
+    const userInfo = {
+      email: email.current?.value,
+      password: password.current?.value,
+    };
+    if (
+      typeof userInfo.email === 'string' &&
+      typeof userInfo.password === 'string' &&
+      userInfo.email.length > 0 &&
+      userInfo.password.length > 0
+    ) {
+      console.log('success');
+      dispatch(signIn(userInfo));
+    }
+  };
+
   return (
     <div className="flex justify-center w-full my-20 p-8">
       <div className="w-full sm:w-8/12 lg:w-6/12 xl:w-4/12 bg-white p-10 rounded-lg shadow-lg flex flex-col justify-center">
@@ -13,12 +39,14 @@ const SignIn = () => {
             type="text"
             placeholder="Enter your email or mobile number"
             className="w-full p-3 border rounded-lg"
+            ref={email}
           />
 
           <input
             type="password"
             placeholder="Enter your password"
             className="w-full p-3 border rounded-lg"
+            ref={password}
           />
 
           <div className="flex items-center justify-between">
@@ -33,7 +61,10 @@ const SignIn = () => {
             </a>
           </div>
 
-          <button className="w-full bg-blue-600 text-white p-3 rounded-lg hover:bg-blue-700">
+          <button
+            className="w-full bg-blue-600 text-white p-3 rounded-lg hover:bg-blue-700"
+            onClick={handleSubmit}
+          >
             Login
           </button>
         </form>
