@@ -1,14 +1,18 @@
 'use client';
-import { useRef } from 'react';
-import { useDispatch, useState } from 'react-redux';
+import { useEffect, useRef } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
 import Link from 'next/link';
 import { signIn } from '../../redux/userSlice';
+import { useRouter } from 'next/navigation';
 
 const SignIn = () => {
+  const isLogged = useSelector((state) => state.userSlice.isLogged);
+
   const email = useRef<HTMLInputElement>(null);
   const password = useRef<HTMLInputElement>(null);
 
   const dispatch = useDispatch();
+  const router = useRouter();
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
@@ -22,10 +26,17 @@ const SignIn = () => {
       userInfo.email.length > 0 &&
       userInfo.password.length > 0
     ) {
-      console.log('success');
       dispatch(signIn(userInfo));
+      email.current.value = '';
+      password.current.value = '';
     }
   };
+
+  useEffect(() => {
+    if (isLogged) {
+      router.push('/user/dashboard');
+    }
+  }, [isLogged, router]);
 
   return (
     <div className="flex justify-center w-full my-20 p-8">
@@ -69,7 +80,7 @@ const SignIn = () => {
           </button>
         </form>
         <p className="text-center text-sm mt-4">
-          Don't have an account?
+          Don&apos;t have an account?
           <Link
             href="/auth/signup"
             className="text-blue-600 font-semibold hover:underline"

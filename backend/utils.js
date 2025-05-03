@@ -14,3 +14,12 @@ export const generateToken = (userInfo) => {
 
   return token;
 };
+
+export const setTokenInCookie = (res, token) => {
+  res.cookie('authToken', token, {
+    httpOnly: true,
+    secure: process.env.NODE_ENV === 'production',
+    sameSite: 'Strict',
+    maxAge: 24 * 60 * 60 * 1000,
+  });
+};

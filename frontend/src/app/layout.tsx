@@ -4,9 +4,7 @@ import { Geist, Geist_Mono } from 'next/font/google';
 import './globals.css';
 import { Provider } from 'react-redux';
 import { store } from './redux/store';
-import Navbar from './Components/NavBar/Navbar';
-import ContactUs from './Components/ContactsUs/ContactUs';
-import SideBar from './Components/SideBar/SideBar';
+import Home from './Components/Home/Home';
 
 const geistSans = Geist({
   variable: '--font-geist-sans',
@@ -28,8 +26,6 @@ export default function RootLayout({
 }: Readonly<{
   children: React.ReactNode;
 }>) {
-  const user: boolean = false;
-
   return (
     <html lang="en">
       <Provider store={store}>
@@ -40,9 +36,7 @@ export default function RootLayout({
               ' "General Sans", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol"',
           }}
         >
-          {user ? <SideBar /> : <Navbar />}
-          {children}
-          {user ? null : <ContactUs />}
+          <Home>{children}</Home>
         </body>
       </Provider>
     </html>

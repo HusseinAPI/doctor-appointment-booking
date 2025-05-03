@@ -1,14 +1,6 @@
-'use strict';
-import { Model } from 'sequelize';
-
-const defineuserModel = (sequelize, DataTypes) => {
-  class User extends Model {
-    static associate(models) {
-      // علاقات مع نماذج أخرى إذا لزم
-    }
-  }
-
-  User.init(
+const defineUserModel = (sequelize, DataTypes) => {
+  const User = sequelize.define(
+    'User',
     {
       name: {
         type: DataTypes.STRING,
@@ -22,14 +14,34 @@ const defineuserModel = (sequelize, DataTypes) => {
           isEmail: true,
         },
       },
+      phone: {
+        type: DataTypes.STRING,
+        allowNull: false,
+        field: 'phone_number',
+      },
+      dateOfBirth: {
+        type: DataTypes.STRING,
+        allowNull: false,
+        field: 'date_of_birth',
+      },
       password: {
         type: DataTypes.STRING,
         allowNull: false,
       },
+      role: {
+        type: DataTypes.STRING,
+        allowNull: false,
+      },
+      createdAt: {
+        type: DataTypes.DATE,
+        field: 'created_at',
+      },
+      updatedAt: {
+        type: DataTypes.DATE,
+        field: 'updated_at',
+      },
     },
     {
-      sequelize,
-      modelName: 'User',
       tableName: 'users',
       timestamps: true,
     }
@@ -38,4 +50,4 @@ const defineuserModel = (sequelize, DataTypes) => {
   return User;
 };
 
-export default defineuserModel;
+export default defineUserModel;

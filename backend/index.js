@@ -2,6 +2,8 @@ import express from 'express';
 import dotenv from 'dotenv';
 import cors from 'cors';
 import userRouter from './routes/userRoutes.js';
+import db from './models/index.js';
+import cookieParser from 'cookie-parser';
 
 dotenv.config();
 
@@ -19,6 +21,16 @@ const corsOptions = {
 server.use(cors(corsOptions));
 server.use(express.json());
 server.use(express.urlencoded({ extended: true }));
+server.use(cookieParser());
+
+db.sequelize
+  .authenticate()
+  .then(() => {
+    console.log('Connected to PostgreSQL database');
+  })
+  .catch((err) => {
+    console.error('Database connection failed:', err);
+  });
 
 server.use('/api', userRouter);
 

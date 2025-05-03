@@ -1,8 +1,11 @@
 import express from 'express';
 const router = express.Router();
 import bcrypt from 'bcrypt';
-import User from '../models/user.js';
-import { generateToken } from '../utils.js';
+import db from '../models/index.js';
+const { User } = db;
+import { generateToken, setTokenInCookie } from '../utils.js';
+
+// SignIn
 
 router.post('/auth/signin', async (req, res) => {
   const { email, password } = req.body;
@@ -14,44 +17,62 @@ router.post('/auth/signin', async (req, res) => {
       return res.status(404).json({ message: 'Not Found' });
     }
 
-    // const isMatchPass = await bcrypt.compare(password, user.password);
+    const isMatchPass = await bcrypt.compare(password, user.password);
 
-    // if (!isMatchPass) {
-    //   return res.status(404).json({ message: 'Invalid Email or Password' });
-    // }
+    if (!isMatchPass) {
+      return res.status(404).json({ message: 'Invalid Email or Password' });
+    }
 
     const token = generateToken({
       name: user.name,
       email: user.email,
     });
 
-    return res.status(200).json(token);
+    setTokenInCookie(res, token);
+
+    const role = user.role;
+
+    return res.status(200).json({ token, role });
   } catch (error) {
+    console.log(error);
     return res.status(500).json({ message: 'Server error', error });
   }
 });
 
+// SignUp
+
 router.post('/auth/signup', async (req, res) => {
-  const { email, password } = req.body;
+  const { name, email, phone, dateOfBirth, password, role } = req.body;
 
   try {
     const existEmail = await User.findOne({ where: { email } });
 
-    if (!existEmail) {
+    if (existEmail) {
       return res.status(404).json({ message: 'try another email' });
     }
 
     const hashedPassword = await bcrypt.hash(password, 10);
 
-    const user = await User.create({
+    await User.create({
+      name,
       email,
+      phone,
+      dateOfBirth,
       password: hashedPassword,
+      role,
     });
 
-    const token = generateToken(user);
+    const userInfo = await User.findOne({ where: { email } });
+
+    const payload = { id: userInfo.id, email: userInfo.email };
+
+    const token = generateToken(payload);
+
+    setTokenInCookie(res, token);
 
     return res.status(200).json(token);
   } catch (error) {
+    console.log(error);
     return res.status(500).json({ message: 'Server error', error });
   }
 });
