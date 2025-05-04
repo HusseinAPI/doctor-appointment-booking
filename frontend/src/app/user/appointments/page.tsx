@@ -1,5 +1,5 @@
 'use client';
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import doctor101 from '../../../../public/doctor101.jpg';
 import doctor102 from '../../../..//public/doctor102.jpg';
 import doctor103 from '../../../../public/doctor103.avif';
@@ -7,8 +7,16 @@ import doctor104 from '../../../../public/doctor104.jpg';
 import doctor105 from '../../../../public/doctor105.avif';
 import Image from 'next/image';
 import Link from 'next/link';
+import { useDispatch } from 'react-redux';
+import { userStayLogged } from '@/app/redux/userSlice';
 
 const Page = () => {
+  const dispatch = useDispatch();
+
+  useEffect(() => {
+    dispatch(userStayLogged());
+  }, []);
+
   const doctors = [
     {
       name: 'Dr. Nahidul Islam',

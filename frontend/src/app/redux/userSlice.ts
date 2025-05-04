@@ -1,5 +1,6 @@
 import { createSlice, createAsyncThunk } from '@reduxjs/toolkit';
 import axios from 'axios';
+import { jwtDecode } from 'jwt-decode';
 
 type Credentials = {
   email: string;
@@ -19,16 +20,17 @@ export const signIn = createAsyncThunk(
     try {
       const response = await axios.post(
         'http://localhost:5000/api/auth/signin',
-        credentials
+        credentials,
+        { withCredentials: true }
       );
 
-      const data = await response.data;
+      const token = await response.data;
 
-      if (!data) {
+      if (!token) {
         return null;
       }
 
-      return data;
+      return token;
     } catch (error) {
       if (axios.isAxiosError(error) && error.response?.data?.message) {
         return rejectWithValue(error.response.data.message);
@@ -45,16 +47,17 @@ export const signUp = createAsyncThunk(
     try {
       const response = await axios.post(
         'http://localhost:5000/api/auth/signup',
-        registerData
+        registerData,
+        { withCredentials: true }
       );
 
-      const data = await response.data;
+      const token = await response.data;
 
-      if (!data) {
+      if (!token) {
         return null;
       }
 
-      return data;
+      return token;
     } catch (error) {
       if (axios.isAxiosError(error) && error.response?.data?.message) {
         return rejectWithValue(error.response.data.message);
@@ -64,16 +67,37 @@ export const signUp = createAsyncThunk(
   }
 );
 
+export const userStayLogged = createAsyncThunk(
+  'auth/stayLogged',
+  async (_, thunkAPI) => {
+    const { rejectWithValue } = thunkAPI;
+    try {
+      const response = await axios.get(
+        'http://localhost:5000/api/auth/patientAuth',
+        { withCredentials: true }
+      );
+      const data = response.data;
+
+      return data;
+    } catch (error) {
+      console.log(error);
+      return rejectWithValue('Please login and try again');
+    }
+  }
+);
+
 type AuthState = {
-  token: string | null;
   isLogged: boolean;
   role: string | null;
 };
 
 const initialState: AuthState = {
-  token: null,
   isLogged: false,
   role: null,
+};
+
+type MyPayloadType = {
+  role: string;
 };
 
 const authSlice = createSlice({
@@ -83,14 +107,20 @@ const authSlice = createSlice({
   extraReducers: (builder) =>
     builder
       .addCase(signIn.fulfilled, (state, action) => {
-        state.token = action.payload.token;
         state.isLogged = true;
-        state.role = action.payload.role;
+        const decode = jwtDecode<MyPayloadType>(action.payload);
+        state.role = decode.role;
       })
       .addCase(signUp.fulfilled, (state, action) => {
-        state.token = action.payload.token;
         state.isLogged = true;
-        state.role = action.payload.role;
+        const decode = jwtDecode<MyPayloadType>(action.payload);
+        state.role = decode.role;
+      })
+      .addCase(userStayLogged.fulfilled, (state, action) => {
+        if (action.payload.user.email && action.payload.user.role) {
+          state.isLogged = true;
+          state.role = action.payload.user.role;
+        }
       }),
 });
 

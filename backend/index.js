@@ -32,7 +32,7 @@ db.sequelize
     console.error('Database connection failed:', err);
   });
 
-server.use('/api', userRouter);
+server.use('/api/auth', userRouter);
 
 server.listen(PORT, () => {
   console.log(` Server running on http://localhost:${PORT}`);

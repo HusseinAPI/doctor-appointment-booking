@@ -5,9 +5,17 @@ import DoctorCard from '../../../Components/DoctorCard/DoctorCard';
 import Calendar from '../../../Components/Calendar/Calendar';
 import DateTimeSelector from '../../../Components/DateTimeSelector/DateTimeSelector';
 import AppointmentForm from '../../../Components/AppointmentForm/AppointmentForm';
+import { useDispatch } from 'react-redux';
+import { userStayLogged } from '@/app/redux/userSlice';
 
 export default function Page() {
   const [currentDate, setCurrentDate] = useState(dayjs());
+
+  const dispatch = useDispatch();
+
+  useEffect(() => {
+    dispatch(userStayLogged());
+  }, []);
 
   // default and update dates function
 

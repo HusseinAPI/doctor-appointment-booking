@@ -1,9 +1,18 @@
-import React from 'react';
+'use client';
+import React, { useEffect } from 'react';
 import { UserPlus, CheckCircle, AlertCircle } from 'lucide-react';
 import Image from 'next/image';
 import profImage from '../../../../public/about.png';
+import { useDispatch } from 'react-redux';
+import { userStayLogged } from '@/app/redux/userSlice';
 
 const Dashboard = () => {
+  const dispatch = useDispatch();
+
+  useEffect(() => {
+    dispatch(userStayLogged());
+  }, []);
+
   return (
     <div className="h-[738px] rounded-l-2xl">
       <div className="fixed left-20 rounded-4xl bg-blue-100 w-full h-full">

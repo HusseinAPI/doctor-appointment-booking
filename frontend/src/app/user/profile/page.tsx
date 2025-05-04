@@ -3,8 +3,16 @@ import React, { useState } from 'react';
 import { Download, File, Pencil } from 'lucide-react';
 import Image from 'next/image';
 import profile from '../../../../public/doctor103.avif';
+import { useDispatch } from 'react-redux';
+import { userStayLogged } from '@/app/redux/userSlice';
 
 export default function Profile() {
+  const dispatch = useDispatch();
+
+  useEffect(() => {
+    dispatch(userStayLogged());
+  }, []);
+
   const [isEdited, setEdited] = useState<boolean>(false);
   return (
     <div className="rounded-l-2xl">

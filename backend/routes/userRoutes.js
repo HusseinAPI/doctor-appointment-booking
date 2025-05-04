@@ -3,11 +3,11 @@ const router = express.Router();
 import bcrypt from 'bcrypt';
 import db from '../models/index.js';
 const { User } = db;
-import { generateToken, setTokenInCookie } from '../utils.js';
+import { generateToken, isAuth, setTokenInCookie } from '../utils.js';
 
 // SignIn
 
-router.post('/auth/signin', async (req, res) => {
+router.post('/signin', async (req, res) => {
   const { email, password } = req.body;
 
   try {
@@ -26,13 +26,12 @@ router.post('/auth/signin', async (req, res) => {
     const token = generateToken({
       name: user.name,
       email: user.email,
+      role: user.role,
     });
 
     setTokenInCookie(res, token);
 
-    const role = user.role;
-
-    return res.status(200).json({ token, role });
+    return res.status(200).json(token);
   } catch (error) {
     console.log(error);
     return res.status(500).json({ message: 'Server error', error });
@@ -41,8 +40,8 @@ router.post('/auth/signin', async (req, res) => {
 
 // SignUp
 
-router.post('/auth/signup', async (req, res) => {
-  const { name, email, phone, dateOfBirth, password, role } = req.body;
+router.post('/signup', async (req, res) => {
+  const { name, email, phone, dateOfBirth, password } = req.body;
 
   try {
     const existEmail = await User.findOne({ where: { email } });
@@ -59,12 +58,16 @@ router.post('/auth/signup', async (req, res) => {
       phone,
       dateOfBirth,
       password: hashedPassword,
-      role,
+      role: 'patient',
     });
 
     const userInfo = await User.findOne({ where: { email } });
 
-    const payload = { id: userInfo.id, email: userInfo.email };
+    const payload = {
+      id: userInfo.id,
+      email: userInfo.email,
+      role: userInfo.role,
+    };
 
     const token = generateToken(payload);
 
@@ -74,6 +77,17 @@ router.post('/auth/signup', async (req, res) => {
   } catch (error) {
     console.log(error);
     return res.status(500).json({ message: 'Server error', error });
+  }
+});
+
+// Stay logged in
+
+router.get('/patientAuth', isAuth, (req, res) => {
+  try {
+    return res.status(200).json({ user: req.user });
+  } catch (error) {
+    console.log(error);
+    return res.status(500).json({ message: 'Server internal Error' });
   }
 });
 

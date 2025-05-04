@@ -1,13 +1,16 @@
 'use client';
-import { useRef } from 'react';
+import { useRef, useEffect } from 'react';
 import Link from 'next/link';
 import { FaHospital } from 'react-icons/fa6';
 import { GiMicroscope } from 'react-icons/gi';
 import { HiClipboardList } from 'react-icons/hi';
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { signUp } from '@/app/redux/userSlice';
+import { useRouter } from 'next/navigation';
 
 const SignUp = () => {
+  const isLogged = useSelector((state) => state.userSlice.isLogged);
+
   const name = useRef<HTMLInputElement>(null);
   const email = useRef<HTMLInputElement>(null);
   const phone = useRef<HTMLInputElement>(null);
@@ -16,6 +19,7 @@ const SignUp = () => {
   const confirmPass = useRef<HTMLInputElement>(null);
 
   const dispatch = useDispatch();
+  const router = useRouter();
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
@@ -25,7 +29,6 @@ const SignUp = () => {
       phone: phone.current?.value,
       dateOfBirth: dateOfBirth.current?.value,
       password: password.current?.value,
-      role: 'patient',
     };
     if (
       typeof userInfo.name === 'string' &&
@@ -46,8 +49,15 @@ const SignUp = () => {
       phone.current.value = '';
       dateOfBirth.current.value = '';
       password.current.value = '';
+      confirmPass.current.value = '';
     }
   };
+
+  useEffect(() => {
+    if (isLogged) {
+      router.push('/user/dashboard');
+    }
+  }, [isLogged, router]);
 
   return (
     <div className="flex justify-center w-full my-20 p-8">
@@ -108,13 +118,13 @@ const SignUp = () => {
           />
           <input
             type="text"
-            placeholder="Enter your role phone"
+            placeholder="Enter your phone number"
             className="w-full p-3 border rounded-lg"
             ref={phone}
           />
           <input
             type="date"
-            placeholder="Enter your date of bith"
+            placeholder="Enter your date of birth"
             className="w-full p-3 border rounded-lg"
             ref={dateOfBirth}
           />
