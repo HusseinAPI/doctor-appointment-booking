@@ -5,11 +5,15 @@ import DoctorCard from '../../../Components/DoctorCard/DoctorCard';
 import Calendar from '../../../Components/Calendar/Calendar';
 import DateTimeSelector from '../../../Components/DateTimeSelector/DateTimeSelector';
 import AppointmentForm from '../../../Components/AppointmentForm/AppointmentForm';
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { userStayLogged } from '@/app/redux/userSlice';
 
 export default function Page() {
   const [currentDate, setCurrentDate] = useState(dayjs());
+  const isLogged = useSelector((state) => state.userSlice.isLogged);
+  const doctorSelected = useSelector(
+    (state) => state.doctorSlice.doctorSelected
+  );
 
   const dispatch = useDispatch();
 
@@ -54,19 +58,21 @@ export default function Page() {
   const [isOpen, setOpen] = useState<boolean>(false);
 
   return (
-    <div className="rounded-l-2xl fixed overflow-auto left-20 rounded-4xl bg-blue-100 w-full h-full">
-      <div className="bg-white p-6 flex justify-around flex-col md:flex-row gap-8">
-        <DoctorCard />
-        <Calendar
-          currentDate={currentDate}
-          selectedDate={selectedDate}
-          onSelectDate={handleSelectDay}
-          onNextMonth={() => setCurrentDate(currentDate.add(1, 'month'))}
-          onPrevMonth={() => setCurrentDate(currentDate.subtract(1, 'month'))}
-        />
+    isLogged && (
+      <div className="rounded-l-2xl fixed overflow-auto left-20 rounded-4xl bg-blue-100 w-full h-full">
+        <div className="bg-white p-6 flex justify-around flex-col md:flex-row gap-8">
+          <DoctorCard doctorSelected={doctorSelected} />
+          <Calendar
+            currentDate={currentDate}
+            selectedDate={selectedDate}
+            onSelectDate={handleSelectDay}
+            onNextMonth={() => setCurrentDate(currentDate.add(1, 'month'))}
+            onPrevMonth={() => setCurrentDate(currentDate.subtract(1, 'month'))}
+          />
+        </div>
+        <DateTimeSelector dates={dates} setOpen={setOpen} />
+        <AppointmentForm isOpen={isOpen} setOpen={setOpen} />
       </div>
-      <DateTimeSelector dates={dates} setOpen={setOpen} />
-      <AppointmentForm isOpen={isOpen} setOpen={setOpen} />
-    </div>
+    )
   );
 }

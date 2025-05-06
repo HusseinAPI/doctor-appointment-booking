@@ -1,67 +1,28 @@
 'use client';
-import React, { useState } from 'react';
-import doctor101 from '../../../public/doctor101.jpg';
-import doctor102 from '../../../public/doctor102.jpg';
-import doctor103 from '../../../public/doctor103.avif';
-import doctor104 from '../../../public/doctor104.jpg';
-import doctor105 from '../../../public/doctor105.avif';
+import React, { useEffect, useState } from 'react';
 import Image from 'next/image';
+import { useDispatch, useSelector } from 'react-redux';
+import { getDoctors } from '../redux/doctorSlice';
 
 const Doctors = () => {
-  const doctors = [
-    {
-      name: 'Dr. Nahidul Islam',
-      specialty: 'Cardiology',
-      rating: 124,
-      location: 'Georgia, USA',
-      buttonColor: 'bg-blue-100 text-blue-600',
-      image: doctor101.src,
-    },
-    {
-      name: 'Dr. Roksana Louwis',
-      specialty: 'Hematology',
-      rating: 124,
-      location: 'Georgia, USA',
-      buttonColor: 'bg-green-100 text-green-600',
-      image: doctor102.src,
-    },
-    {
-      name: 'Dr. Towkib Tanvir',
-      specialty: 'Pulmonology',
-      rating: 124,
-      location: 'Georgia, USA',
-      buttonColor: 'bg-teal-100 text-teal-600',
-      image: doctor103.src,
-    },
-    {
-      name: 'Dr. Nasai Eshal',
-      specialty: 'Heart Diseases',
-      rating: 124,
-      location: 'Georgia, USA',
-      buttonColor: 'bg-lime-100 text-lime-600',
-      image: doctor104.src,
-    },
-    {
-      name: 'Dr. Nasai Eshal',
-      specialty: 'Heart Diseases',
-      rating: 124,
-      location: 'Georgia, USA',
-      buttonColor: 'bg-lime-100 text-lime-600',
-      image: doctor105.src,
-    },
-  ];
+  const doctors = useSelector((state) => state.doctorSlice.doctors);
+  const dispatch = useDispatch();
+
+  useEffect(() => {
+    dispatch(getDoctors());
+  }, []);
 
   const [filter, setFilter] = useState<string>('All');
 
   const specialties = [
     'All',
-    ...new Set(doctors.map((doctor) => doctor.specialty)),
+    ...new Set(doctors.map((doctor) => doctor.specialization)),
   ];
 
   const filteredDoctors =
     filter === 'All'
       ? doctors
-      : doctors.filter((doctor) => doctor.specialty === filter);
+      : doctors.filter((doctor) => doctor.specialization === filter);
 
   return (
     <div className="w-full p-10">
@@ -87,7 +48,7 @@ const Doctors = () => {
               className="w-3/5 sm:w-max bg-white shadow-lg rounded-2xl mt-5 p-5 flex flex-col items-center"
             >
               <Image
-                src={doctor.image}
+                src={`${doctor.image_url}`}
                 alt={doctor.name}
                 width={200}
                 height={200}
@@ -96,7 +57,7 @@ const Doctors = () => {
               <span
                 className={`px-3 py-1 rounded-full text-sm font-medium ${doctor.buttonColor}`}
               >
-                {doctor.specialty}
+                {doctor.specialization}
               </span>
               <h3 className="text-xl font-semibold mt-2">{doctor.name}</h3>
               <div className="flex items-center gap-1 text-gray-600 mt-1">

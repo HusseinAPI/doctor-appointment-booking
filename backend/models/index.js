@@ -3,6 +3,7 @@ import fs from 'fs';
 import path from 'path';
 import { fileURLToPath } from 'url';
 import UserModel from './user.js';
+import DoctorModel from './doctor.js';
 
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
@@ -23,6 +24,7 @@ const db = {
   sequelize,
   Sequelize,
   User: UserModel(sequelize, DataTypes),
+  Doctor: DoctorModel(sequelize, DataTypes),
 };
 
 export default db;
