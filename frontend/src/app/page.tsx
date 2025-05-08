@@ -1,58 +1,30 @@
+'use client';
 import doctorImg from '../../public/doctor.png';
 import about from '../../public/about.png';
-import doctor101 from '../../public/doctor101.jpg';
-import doctor102 from '../../public/doctor102.jpg';
-import doctor103 from '../../public/doctor103.avif';
-import doctor104 from '../../public/doctor104.jpg';
-import doctor105 from '../../public/doctor105.avif';
 import { FaUserDoctor } from 'react-icons/fa6';
 import { RiCalendarScheduleLine } from 'react-icons/ri';
 import { FcIdea } from 'react-icons/fc';
 import Image from 'next/image';
+import { useDispatch, useSelector } from 'react-redux';
+import { useEffect } from 'react';
+import { getDoctors } from './redux/doctorSlice';
+import { useRouter } from 'next/navigation';
 
 export default function Home() {
-  const doctors = [
-    {
-      name: 'Dr. Nahidul Islam',
-      specialty: 'Cardiology',
-      rating: 124,
-      location: 'Georgia, USA',
-      buttonColor: 'bg-blue-100 text-blue-600',
-      image: doctor101.src,
-    },
-    {
-      name: 'Dr. Roksana Louwis',
-      specialty: 'Hematology',
-      rating: 124,
-      location: 'Georgia, USA',
-      buttonColor: 'bg-green-100 text-green-600',
-      image: doctor102.src,
-    },
-    {
-      name: 'Dr. Towkib Tanvir',
-      specialty: 'Pulmonology',
-      rating: 124,
-      location: 'Georgia, USA',
-      buttonColor: 'bg-teal-100 text-teal-600',
-      image: doctor103.src,
-    },
-    {
-      name: 'Dr. Nasai Eshal',
-      specialty: 'Heart Diseases',
-      rating: 124,
-      location: 'Georgia, USA',
-      buttonColor: 'bg-lime-100 text-lime-600',
-      image: doctor104.src,
-    },
-    {
-      name: 'Dr. Nasai Eshal',
-      specialty: 'Heart Diseases',
-      rating: 124,
-      location: 'Georgia, USA',
-      buttonColor: 'bg-lime-100 text-lime-600',
-      image: doctor105.src,
-    },
-  ];
+  const isLogged = useSelector((state) => state.userSlice.isLogged);
+  const doctors = useSelector((state) => state.doctorSlice.doctors);
+  const dispatch = useDispatch();
+  const router = useRouter();
+
+  useEffect(() => {
+    dispatch(getDoctors());
+  }, []);
+
+  useEffect(() => {
+    if (isLogged) {
+      router.push('/user/dashboard');
+    }
+  }, [isLogged]);
 
   return (
     <>
@@ -168,33 +140,37 @@ export default function Home() {
       </div>
       <div className="flex justify-center sm:justify-between items-center flex-wrap w-full p-20">
         <h1 className="text-5xl w-full font-bold">Doctor</h1>
-        {doctors.map((doctor, index) => (
-          <div
-            key={index}
-            className="w-3/5 sm:w-max bg-white shadow-lg rounded-2xl mt-5 p-5 flex flex-col items-center"
-          >
-            <Image
-              src={doctor.image}
-              alt={doctor.name}
-              width={200}
-              height={200}
-              className="w-full h-56 object-cover rounded-t-lg"
-            />
-            <span
-              className={`px-3 py-1 rounded-full text-sm font-medium ${doctor.buttonColor}`}
-            >
-              {doctor.specialty}
-            </span>
-            <h3 className="text-xl font-semibold mt-2">{doctor.name}</h3>
-            <div className="flex items-center gap-1 text-gray-600 mt-1">
-              <span className="text-sm">⭐ ({doctor.rating})</span>
-            </div>
-            <p className="text-gray-500 text-sm mt-2">{doctor.location}</p>
-            <button className="mt-4 px-4 py-2 text-blue-600 font-semibold border border-blue-600 rounded-lg hover:bg-blue-600 hover:text-white transition">
-              Book An Appointment
-            </button>
-          </div>
-        ))}
+        {doctors.map((doctor, index) => {
+          if (index < 5) {
+            return (
+              <div
+                key={index}
+                className="w-3/5 sm:w-max bg-white shadow-lg rounded-2xl mt-5 p-5 flex flex-col items-center"
+              >
+                <Image
+                  src={doctor.imageUrl}
+                  alt={doctor.name}
+                  width={200}
+                  height={200}
+                  className="w-full h-56 object-cover rounded-t-lg"
+                />
+                <span
+                  className={`px-3 py-1 rounded-full text-sm font-medium ${doctor.buttonColor}`}
+                >
+                  {doctor.specialization}
+                </span>
+                <h3 className="text-xl font-semibold mt-2">{doctor.name}</h3>
+                <div className="flex items-center gap-1 text-gray-600 mt-1">
+                  <span className="text-sm">⭐ ({doctor.rating})</span>
+                </div>
+                <p className="text-gray-500 text-sm mt-2">{doctor.location}</p>
+                <button className="mt-4 px-4 py-2 text-blue-600 font-semibold border border-blue-600 rounded-lg hover:bg-blue-600 hover:text-white transition">
+                  Book An Appointment
+                </button>
+              </div>
+            );
+          }
+        })}
       </div>
     </>
   );
