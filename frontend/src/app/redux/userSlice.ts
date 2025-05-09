@@ -86,14 +86,36 @@ export const userStayLogged = createAsyncThunk(
   }
 );
 
+export const bookAppointment = createAsyncThunk(
+  'auth/bookAppointment',
+  async (appointmentDetails, thnukAPI) => {
+    const { rejectWithValue } = thnukAPI;
+    try {
+      const response = await axios.post(
+        'http://localhost:5000/api/auth/bookappointment',
+        appointmentDetails,
+        { withCredentials: true }
+      );
+
+      const result = await response.data;
+
+      return result;
+    } catch (error) {
+      return rejectWithValue(error.message);
+    }
+  }
+);
+
 type AuthState = {
   isLogged: boolean;
   role: string | null;
+  isBooking: string | null;
 };
 
 const initialState: AuthState = {
   isLogged: false,
   role: null,
+  isBooking: null,
 };
 
 type MyPayloadType = {
@@ -121,6 +143,9 @@ const authSlice = createSlice({
           state.isLogged = true;
           state.role = action.payload.user.role;
         }
+      })
+      .addCase(bookAppointment.fulfilled, (state, action) => {
+        state.isBooking = action.payload;
       }),
 });
 

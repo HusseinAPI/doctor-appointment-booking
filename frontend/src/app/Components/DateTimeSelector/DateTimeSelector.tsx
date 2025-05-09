@@ -1,11 +1,29 @@
+import dayjs from 'dayjs';
+import customParseFormat from 'dayjs/plugin/customParseFormat';
+
 export default function DateTimeSelector({
   dates,
   setOpen,
+  setScheduleDate,
 }: {
   dates: string[];
   setOpen: React.Dispatch<React.SetStateAction<boolean>>;
+  setScheduleDate;
 }) {
   const times = ['10:30', '11:30', '12:30', '13:30', '14:30', '15:30', '16:00'];
+
+  const handleSetDateandTime = (day: string, time: string) => {
+    dayjs.extend(customParseFormat);
+    const input = day.slice(4);
+    const currentYear = dayjs().year();
+
+    const parsed = dayjs(`${input} ${currentYear}`, 'D MMM YYYY');
+
+    const date = parsed.format('YYYY-MM-DD');
+
+    const result = date + ' ' + time;
+    setScheduleDate(result);
+  };
 
   return (
     <div className="bg-white w-full flex flex-wrap p-10">
@@ -30,7 +48,10 @@ export default function DateTimeSelector({
                   <div className="flex flex-wrap flex-col w-1/6">
                     <button
                       className="w-35 py-1 text-base rounded-lg bg-white border border-blue-600 text-blue-600 hover:bg-blue-600 hover:text-white  cursor-pointer"
-                      onClick={() => setOpen(true)}
+                      onClick={() => {
+                        handleSetDateandTime(day, time);
+                        setOpen(true);
+                      }}
                     >
                       {time}
                     </button>

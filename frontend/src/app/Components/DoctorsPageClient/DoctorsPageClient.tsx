@@ -5,20 +5,26 @@ import Link from 'next/link';
 import { useDispatch, useSelector } from 'react-redux';
 import { userStayLogged } from '@/app/redux/userSlice';
 import { selectDoctor } from '@/app/redux/doctorSlice';
-import { usePathname } from 'next/navigation';
+import { useRouter } from 'next/navigation';
 
 const DoctorPageClient = ({ doctors }: { doctors: [] }) => {
   const isLogged = useSelector((state) => state.userSlice.isLogged);
 
   const dispatch = useDispatch();
 
-  const path = usePathname();
+  const router = useRouter();
 
   useEffect(() => {
-    if (path.includes('user')) {
-      dispatch(userStayLogged());
+    dispatch(userStayLogged());
+  }, []);
+
+  useEffect(() => {
+    if (isLogged) {
+      router.push('/user/appointments');
+    } else {
+      router.push('/doctors');
     }
-  }, [path]);
+  }, [isLogged, router]);
 
   const [filter, setFilter] = useState<string>('All');
 
@@ -37,72 +43,72 @@ const DoctorPageClient = ({ doctors }: { doctors: [] }) => {
   };
 
   return (
-    isLogged && (
-      <div className="h-[738px] rounded-l-2xl">
-        <div className="fixed overflow-auto left-20 rounded-4xl bg-blue-100 w-full h-full">
-          <div className="p-10 ml-30">
-            <div className="flex justify-center sm:justify-start mb-5 mt-10">
-              <select
-                value={filter}
-                onChange={(e) => setFilter(e.target.value)}
-                className="p-2 border border-blue-600 text-blue-600 rounded-lg focus:ring focus:ring-blue-300"
-              >
-                {specialties.map((specialty) => (
-                  <option key={specialty} value={specialty}>
-                    {specialty}
-                  </option>
-                ))}
-              </select>
-            </div>
+    <div className={`${isLogged ? 'h-[738px]' : ''} rounded-l-2xl`}>
+      <div
+        className={`${
+          isLogged ? 'fixed bg-blue-100' : ''
+        } overflow-auto left-20 rounded-4xl  w-full h-full`}
+      >
+        <div className="p-10 ml-30">
+          <div className="flex justify-center sm:justify-start mb-5 mt-10">
+            <select
+              value={filter}
+              onChange={(e) => setFilter(e.target.value)}
+              className="p-2 border border-blue-600 text-blue-600 rounded-lg focus:ring focus:ring-blue-300"
+            >
+              {specialties.map((specialty) => (
+                <option key={specialty} value={specialty}>
+                  {specialty}
+                </option>
+              ))}
+            </select>
+          </div>
 
-            <div className="flex justify-center sm:justify-between items-center flex-wrap w-5/6">
-              {filteredDoctors.length > 0 ? (
-                filteredDoctors.map((doctor, index) => (
-                  <div
-                    key={index}
-                    className="w-4/5 sm:w-max bg-white shadow-lg rounded-2xl mt-5 p-5 flex flex-col items-center"
+          <div className="flex justify-center sm:justify-between items-center flex-wrap w-5/6">
+            {filteredDoctors.length > 0 ? (
+              filteredDoctors.map((doctor, index) => (
+                <div
+                  key={index}
+                  className="w-4/5 sm:w-max bg-white shadow-lg rounded-2xl mt-5 p-5 flex flex-col items-center"
+                >
+                  <Image
+                    src={`${doctor.imageUrl}`}
+                    alt={doctor.name}
+                    width={200}
+                    height={200}
+                    className="w-full h-56 object-cover rounded-t-lg"
+                  />
+                  <span
+                    className={`px-3 py-1 rounded-full text-sm font-medium ${doctor.buttonColor}`}
                   >
-                    <Image
-                      src={`${doctor.imageUrl}`}
-                      alt={doctor.name}
-                      width={200}
-                      height={200}
-                      className="w-full h-56 object-cover rounded-t-lg"
-                    />
-                    <span
-                      className={`px-3 py-1 rounded-full text-sm font-medium ${doctor.buttonColor}`}
-                    >
-                      {doctor.specialization}
-                    </span>
-                    <h3 className="text-xl font-semibold mt-2">
-                      {doctor.name}
-                    </h3>
-                    <div className="flex items-center gap-1 text-gray-600 mt-1">
-                      <span className="text-sm">⭐ ({doctor.rating})</span>
-                    </div>
-                    <p className="text-gray-500 text-sm mt-2">
-                      {doctor.location}
-                    </p>
-                    <button
-                      className="mt-4 px-4 py-2 text-blue-600 font-semibold border border-blue-600 rounded-lg hover:bg-blue-600 hover:text-white cursor-pointer transition"
-                      onClick={() => handleSelectDoctor(doctor)}
-                    >
-                      <Link href={`/user/appointments/${doctor.name}`}>
-                        Book An Appointment
-                      </Link>
-                    </button>
+                    {doctor.specialization}
+                  </span>
+                  <h3 className="text-xl font-semibold mt-2">{doctor.name}</h3>
+                  <div className="flex items-center gap-1 text-gray-600 mt-1">
+                    <span className="text-sm">⭐ ({doctor.rating})</span>
                   </div>
-                ))
-              ) : (
-                <p className="text-center w-full text-gray-600">
-                  No doctors found for this specialty.
-                </p>
-              )}
-            </div>
+                  <p className="text-gray-500 text-sm mt-2">
+                    {doctor.location}
+                  </p>
+                  <button
+                    className="mt-4 px-4 py-2 text-blue-600 font-semibold border border-blue-600 rounded-lg hover:bg-blue-600 hover:text-white cursor-pointer transition"
+                    onClick={() => handleSelectDoctor(doctor)}
+                  >
+                    <Link href={`/user/appointments/${doctor.name}`}>
+                      Book An Appointment
+                    </Link>
+                  </button>
+                </div>
+              ))
+            ) : (
+              <p className="text-center w-full text-gray-600">
+                No doctors found for this specialty.
+              </p>
+            )}
           </div>
         </div>
       </div>
-    )
+    </div>
   );
 };
 

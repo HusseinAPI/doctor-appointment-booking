@@ -56,6 +56,7 @@ export default function Page() {
   // display form of book a appointment
 
   const [isOpen, setOpen] = useState<boolean>(false);
+  const [scheduleDate, setScheduleDate] = useState('');
 
   return (
     isLogged && (
@@ -70,8 +71,16 @@ export default function Page() {
             onPrevMonth={() => setCurrentDate(currentDate.subtract(1, 'month'))}
           />
         </div>
-        <DateTimeSelector dates={dates} setOpen={setOpen} />
-        <AppointmentForm isOpen={isOpen} setOpen={setOpen} />
+        <DateTimeSelector
+          dates={dates}
+          setOpen={setOpen}
+          setScheduleDate={setScheduleDate}
+        />
+        <AppointmentForm
+          isOpen={isOpen}
+          setOpen={setOpen}
+          scheduleDate={scheduleDate}
+        />
       </div>
     )
   );

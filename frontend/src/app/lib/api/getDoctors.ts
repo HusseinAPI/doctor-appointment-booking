@@ -7,7 +7,7 @@ export async function getDoctorsFromAPI() {
       }
     );
 
-    return response.json();
+    return await response.json();
   } catch (error) {
     console.log(error);
     return error;
