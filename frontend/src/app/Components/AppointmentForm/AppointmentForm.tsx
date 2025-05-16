@@ -1,5 +1,7 @@
 import { useRef, useState } from 'react';
 import dayjs from 'dayjs';
+import { useDispatch } from 'react-redux';
+import { bookAppointment } from '@/app/redux/userSlice';
 
 export default function AppointmentForm({
   isOpen,
@@ -13,17 +15,21 @@ export default function AppointmentForm({
   const firstName = useRef(null);
   const lastName = useRef(null);
   const email = useRef(null);
+  const dateOfBirth = useRef(null);
   const phone = useRef(null);
   const [haveInsurance, setInsurance] = useState<string>('no');
+
+  const dispatch = useDispatch();
 
   const handleBookingAppointment = () => {
     const data = {
       firstName: firstName.current.value,
       lastName: lastName.current.value,
-      dateOfBirth: scheduleDate,
+      dateOfBirth: dateOfBirth.current.value,
       email: email.current.value,
       phone: phone.current.value,
       haveInsurance,
+      date: scheduleDate,
     };
 
     if (
@@ -32,8 +38,16 @@ export default function AppointmentForm({
       data.dateOfBirth.length > 0 &&
       data.email.length > 0 &&
       data.phone.length > 0 &&
-      data.haveInsurance.length > 0
+      data.haveInsurance.length > 0 &&
+      data.date.length > 0
     ) {
+      dispatch(bookAppointment(data));
+      setOpen(false);
+      firstName.current.value = '';
+      lastName.current.value = '';
+      dateOfBirth.current.value = '';
+      email.current.value = '';
+      phone.current.value = '';
     }
   };
 
@@ -82,6 +96,18 @@ export default function AppointmentForm({
                 placeholder="Last"
                 className="w-1/2 p-3 border border-gray-300 rounded-lg"
                 ref={lastName}
+              />
+            </div>
+
+            <div className="flex gap-4">
+              <span className="w-1/2 font-medium">Date of Birth:</span>
+            </div>
+            <div className="flex gap-4">
+              <input
+                type="date"
+                placeholder="your birth date"
+                className="w-full p-3 border border-gray-300 rounded-lg"
+                ref={dateOfBirth}
               />
             </div>
 

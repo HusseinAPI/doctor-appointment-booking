@@ -2,7 +2,7 @@ import express from 'express';
 const router = express.Router();
 import bcrypt from 'bcrypt';
 import db from '../models/index.js';
-const { User } = db;
+const { User, Appointment } = db;
 import { generateToken, isAuth, setTokenInCookie } from '../utils.js';
 
 // SignIn
@@ -24,7 +24,7 @@ router.post('/signin', async (req, res) => {
     }
 
     const token = generateToken({
-      name: user.name,
+      id: user.id,
       email: user.email,
       role: user.role,
     });
@@ -88,6 +88,30 @@ router.get('/patientAuth', isAuth, (req, res) => {
   } catch (error) {
     console.log(error);
     return res.status(500).json({ message: 'Server internal Error' });
+  }
+});
+
+// Book an appointment
+
+router.post('/bookappointment', isAuth, async (req, res) => {
+  const { firstName, lastName, dateOfBirth, email, phone, date } = req.body;
+  const { id } = req.user;
+
+  try {
+    await Appointment.create({
+      userId: id,
+      firstName,
+      lastName,
+      dateOfBirth,
+      email,
+      phone,
+      dateOfAppointment: date,
+    });
+
+    res.status(200).json({ message: 'Successfuly booking appointment' });
+  } catch (error) {
+    console.log(error);
+    return res.status(500).json({ message: 'Server Internal Error' });
   }
 });
 
