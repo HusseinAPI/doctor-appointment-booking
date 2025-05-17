@@ -106,16 +106,39 @@ export const bookAppointment = createAsyncThunk(
   }
 );
 
+export const fetchAppointments = createAsyncThunk(
+  'auth/fetchAppointments',
+  async (userId, thunkAPI) => {
+    const { rejectWithValue } = thunkAPI;
+    try {
+      const response = await axios.post(
+        'http://localhost:5000/api/auth/appointments',
+        userId,
+        { withCredentials: true }
+      );
+
+      const appointments = await response.data;
+
+      return appointments;
+    } catch (error) {
+      console.log(error);
+      return rejectWithValue(error.message);
+    }
+  }
+);
+
 type AuthState = {
   isLogged: boolean;
   role: string | null;
   isBooking: string | null;
+  appointments: [] | undefined;
 };
 
 const initialState: AuthState = {
   isLogged: false,
   role: null,
   isBooking: null,
+  appointments: [],
 };
 
 type MyPayloadType = {
@@ -146,6 +169,9 @@ const authSlice = createSlice({
       })
       .addCase(bookAppointment.fulfilled, (state, action) => {
         state.isBooking = action.payload;
+      })
+      .addCase(fetchAppointments.fulfilled, (state, action) => {
+        state.appointments = action.payload;
       }),
 });
 

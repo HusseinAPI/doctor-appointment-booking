@@ -6,7 +6,7 @@ import Calendar from '../../../Components/Calendar/Calendar';
 import DateTimeSelector from '../../../Components/DateTimeSelector/DateTimeSelector';
 import AppointmentForm from '../../../Components/AppointmentForm/AppointmentForm';
 import { useDispatch, useSelector } from 'react-redux';
-import { userStayLogged } from '@/app/redux/userSlice';
+import { fetchAppointments, userStayLogged } from '@/app/redux/userSlice';
 
 export default function Page() {
   const [currentDate, setCurrentDate] = useState(dayjs());
@@ -14,11 +14,30 @@ export default function Page() {
   const doctorSelected = useSelector(
     (state) => state.doctorSlice.doctorSelected
   );
+  const appointments = useSelector((state) => state.userSlice.appointments);
 
   const dispatch = useDispatch();
 
   useEffect(() => {
     dispatch(userStayLogged());
+    dispatch(fetchAppointments(null));
+  }, []);
+
+  // Check date in list of days and times if available
+
+  const [notAvailable, setNotAvailable] = useState<[]>([]);
+
+  useEffect(() => {
+    let appointmentFormat = [];
+
+    appointments.filter((appointment) => {
+      appointmentFormat.push(appointment.dateOfAppointment.slice(0, 16));
+      console.log(appointmentFormat);
+      setNotAvailable(appointmentFormat);
+      console.log(notAvailable);
+
+      return appointment.dateOfAppointment;
+    });
   }, []);
 
   // default and update dates function
@@ -75,6 +94,7 @@ export default function Page() {
           dates={dates}
           setOpen={setOpen}
           setScheduleDate={setScheduleDate}
+          notAvailable={notAvailable}
         />
         <AppointmentForm
           isOpen={isOpen}

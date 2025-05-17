@@ -108,10 +108,29 @@ router.post('/bookappointment', isAuth, async (req, res) => {
       dateOfAppointment: date,
     });
 
-    res.status(200).json({ message: 'Successfuly booking appointment' });
+    return res.status(200).json({ message: 'Successfuly booking appointment' });
   } catch (error) {
     console.log(error);
     return res.status(500).json({ message: 'Server Internal Error' });
+  }
+});
+
+// fetch appointments and check user appointments
+
+router.post('/appointments', isAuth, async (req, res) => {
+  const { userId } = req.body;
+
+  try {
+    if (userId) {
+      const userAppointments = await Appointment.findAll({ where: { userId } });
+      return res.status(200).json(userAppointments);
+    }
+
+    const allAppointments = await Appointment.findAll();
+    return res.status(200).json(allAppointments);
+  } catch (error) {
+    console.log(error);
+    return res.status(500).json({ message: 'Server Internal error' });
   }
 });
 
