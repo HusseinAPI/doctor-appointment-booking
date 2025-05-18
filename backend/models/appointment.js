@@ -31,7 +31,11 @@ const defineAppointmentModel = (Sequelize, DataTypes) => {
         allowNull: false,
         field: 'date_of_appointment',
       },
-
+      doctorId: {
+        type: DataTypes.STRING,
+        allowNull: false,
+        field: 'doctor_id',
+      },
       createdAt: {
         type: DataTypes.DATE,
         field: 'created_at',

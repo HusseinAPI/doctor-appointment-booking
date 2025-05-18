@@ -3,7 +3,7 @@ import React, { useState, useEffect } from 'react';
 import Image from 'next/image';
 import Link from 'next/link';
 import { useDispatch, useSelector } from 'react-redux';
-import { userStayLogged } from '@/app/redux/userSlice';
+import { emptyAppointments, userStayLogged } from '@/app/redux/userSlice';
 import { selectDoctor } from '@/app/redux/doctorSlice';
 import { useRouter } from 'next/navigation';
 
@@ -16,6 +16,7 @@ const DoctorPageClient = ({ doctors }: { doctors: [] }) => {
 
   useEffect(() => {
     dispatch(userStayLogged());
+    dispatch(emptyAppointments())
   }, []);
 
   useEffect(() => {

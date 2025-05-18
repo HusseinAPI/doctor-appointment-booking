@@ -21,7 +21,6 @@ export const isAuth = (req, res, next) => {
   if (!token) {
     return res.status(401).json({ message: 'Unauthorized: No token' });
   }
-
   try {
     const decoded = jwt.verify(token, process.env.JWT_SECRET_KEY);
     req.user = decoded;

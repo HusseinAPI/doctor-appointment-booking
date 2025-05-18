@@ -1,6 +1,6 @@
 import { useRef, useState } from 'react';
 import dayjs from 'dayjs';
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { bookAppointment } from '@/app/redux/userSlice';
 
 export default function AppointmentForm({
@@ -19,6 +19,10 @@ export default function AppointmentForm({
   const phone = useRef(null);
   const [haveInsurance, setInsurance] = useState<string>('no');
 
+  const doctorSelected = useSelector(
+    (state) => state.doctorSlice.doctorSelected
+  );
+
   const dispatch = useDispatch();
 
   const handleBookingAppointment = () => {
@@ -30,8 +34,8 @@ export default function AppointmentForm({
       phone: phone.current.value,
       haveInsurance,
       date: scheduleDate,
+      doctor: doctorSelected.id,
     };
-
     if (
       data.firstName.length > 0 &&
       data.lastName.length > 0 &&
@@ -39,7 +43,8 @@ export default function AppointmentForm({
       data.email.length > 0 &&
       data.phone.length > 0 &&
       data.haveInsurance.length > 0 &&
-      data.date.length > 0
+      data.date.length > 0 &&
+      data.doctor > 0
     ) {
       dispatch(bookAppointment(data));
       setOpen(false);

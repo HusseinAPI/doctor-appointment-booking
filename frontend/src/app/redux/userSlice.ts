@@ -108,12 +108,31 @@ export const bookAppointment = createAsyncThunk(
 
 export const fetchAppointments = createAsyncThunk(
   'auth/fetchAppointments',
-  async (userId, thunkAPI) => {
+  async (doctorId, thunkAPI) => {
     const { rejectWithValue } = thunkAPI;
     try {
-      const response = await axios.post(
-        'http://localhost:5000/api/auth/appointments',
-        userId,
+      const response = await axios.get(
+        `http://localhost:5000/api/auth/allAppointments/${doctorId}`,
+        { withCredentials: true }
+      );
+
+      const appointments = await response.data;
+
+      return appointments;
+    } catch (error) {
+      console.log(error);
+      return rejectWithValue(error.message);
+    }
+  }
+);
+
+export const fetchUserAppointments = createAsyncThunk(
+  'auth/fetchUserAppointments',
+  async (_, thunkAPI) => {
+    const { rejectWithValue } = thunkAPI;
+    try {
+      const response = await axios.get(
+        'http://localhost:5000/api/auth/userAppointments',
         { withCredentials: true }
       );
 
@@ -129,6 +148,7 @@ export const fetchAppointments = createAsyncThunk(
 
 type AuthState = {
   isLogged: boolean;
+  name: string | null;
   role: string | null;
   isBooking: string | null;
   appointments: [] | undefined;
@@ -136,34 +156,44 @@ type AuthState = {
 
 const initialState: AuthState = {
   isLogged: false,
+  name: null,
   role: null,
   isBooking: null,
   appointments: [],
 };
 
 type MyPayloadType = {
+  id: number;
   role: string;
+  name: string;
 };
 
 const authSlice = createSlice({
   name: 'auth',
   initialState,
-  reducers: {},
+  reducers: {
+    emptyAppointments: (state) => {
+      state.appointments = [];
+    },
+  },
   extraReducers: (builder) =>
     builder
       .addCase(signIn.fulfilled, (state, action) => {
         state.isLogged = true;
         const decode = jwtDecode<MyPayloadType>(action.payload);
+        state.name = decode.name;
         state.role = decode.role;
       })
       .addCase(signUp.fulfilled, (state, action) => {
         state.isLogged = true;
         const decode = jwtDecode<MyPayloadType>(action.payload);
+        state.name = decode.name;
         state.role = decode.role;
       })
       .addCase(userStayLogged.fulfilled, (state, action) => {
         if (action.payload.user.email && action.payload.user.role) {
           state.isLogged = true;
+          state.name = action.payload.user.name;
           state.role = action.payload.user.role;
         }
       })
@@ -172,7 +202,11 @@ const authSlice = createSlice({
       })
       .addCase(fetchAppointments.fulfilled, (state, action) => {
         state.appointments = action.payload;
+      })
+      .addCase(fetchUserAppointments.fulfilled, (state, action) => {
+        state.appointments = action.payload;
       }),
 });
 
+export const { emptyAppointments } = authSlice.actions;
 export default authSlice.reducer;

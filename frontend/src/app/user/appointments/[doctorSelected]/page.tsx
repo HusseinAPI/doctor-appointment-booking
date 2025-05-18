@@ -7,6 +7,8 @@ import DateTimeSelector from '../../../Components/DateTimeSelector/DateTimeSelec
 import AppointmentForm from '../../../Components/AppointmentForm/AppointmentForm';
 import { useDispatch, useSelector } from 'react-redux';
 import { fetchAppointments, userStayLogged } from '@/app/redux/userSlice';
+import { usePathname } from 'next/navigation';
+import { getSelectedDoctor } from '@/app/redux/doctorSlice';
 
 export default function Page() {
   const [currentDate, setCurrentDate] = useState(dayjs());
@@ -18,9 +20,12 @@ export default function Page() {
 
   const dispatch = useDispatch();
 
+  const path = decodeURIComponent(usePathname().split('/').pop());
+
   useEffect(() => {
     dispatch(userStayLogged());
-    dispatch(fetchAppointments(null));
+    // dispatch(fetchAppointments(doctorSelected.id));
+    dispatch(getSelectedDoctor(path));
   }, []);
 
   // Check date in list of days and times if available
@@ -28,17 +33,11 @@ export default function Page() {
   const [notAvailable, setNotAvailable] = useState<[]>([]);
 
   useEffect(() => {
-    let appointmentFormat = [];
-
-    appointments.filter((appointment) => {
-      appointmentFormat.push(appointment.dateOfAppointment.slice(0, 16));
-      console.log(appointmentFormat);
-      setNotAvailable(appointmentFormat);
-      console.log(notAvailable);
-
-      return appointment.dateOfAppointment;
-    });
-  }, []);
+    const appointmentFormat = appointments.map((app) =>
+      app.dateOfAppointment.slice(0, 16)
+    );
+    setNotAvailable(appointmentFormat);
+  }, [appointments]);
 
   // default and update dates function
 
@@ -68,8 +67,10 @@ export default function Page() {
     const selectDay = dayjs(
       new Date(currentDate.year(), currentDate.month(), day)
     );
-    setSelectedDate(selectDay.format('D'));
-    setDates(defaultAndUpdateDates(selectDay));
+    if (!selectDay.isBefore(dayjs())) {
+      setSelectedDate(selectDay.format('D'));
+      setDates(defaultAndUpdateDates(selectDay));
+    }
   };
 
   // display form of book a appointment

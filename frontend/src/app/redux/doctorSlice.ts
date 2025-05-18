@@ -25,6 +25,24 @@ export const getDoctors = createAsyncThunk(
   }
 );
 
+export const getSelectedDoctor = createAsyncThunk(
+  'doctor/getSelectedDoctor',
+  async (doctorName, thunkAPI) => {
+    const { rejectWithValue } = thunkAPI;
+    try {
+      const response = await axios.get(
+        `http://localhost:5000/http://localhost:5000/api/appointment/doctors/${doctorName}`
+      );
+
+      const doctor = await response.data;
+      return doctor;
+    } catch (error) {
+      console.log(error);
+      return rejectWithValue(error);
+    }
+  }
+);
+
 const initialState = {
   doctors: [],
   doctorSelected: null,
@@ -40,9 +58,13 @@ const doctorSlice = createSlice({
     },
   },
   extraReducers: (builder) =>
-    builder.addCase(getDoctors.fulfilled, (state, action) => {
-      state.doctors = action.payload;
-    }),
+    builder
+      .addCase(getDoctors.fulfilled, (state, action) => {
+        state.doctors = action.payload;
+      })
+      .addCase(getSelectedDoctor.fulfilled, (state, action) => {
+        state.doctorSelected = action.payload;
+      }),
 });
 
 export const { selectDoctor } = doctorSlice.actions;
