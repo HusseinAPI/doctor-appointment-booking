@@ -8,13 +8,23 @@ export default function DoctorCard({
   return (
     <div className="flex bg-white rounded-2xl shadow-md p-6 w-1/2">
       <div className="flex items-center w-9/12">
-        <Image
-          src={doctorSelected?.imageUrl}
-          alt="doctor"
-          className="rounded-xl w-96 h-80"
-          width={500}
-          height={500}
-        />
+        {doctorSelected?.imageUrl ? (
+          <Image
+            src={doctorSelected.imageUrl}
+            alt="doctor"
+            className="rounded-xl w-96 h-80"
+            width={500}
+            height={500}
+          />
+        ) : (
+          <Image
+            src="/default-doctor.png"
+            alt="default doctor"
+            className="rounded-xl w-96 h-80"
+            width={500}
+            height={500}
+          />
+        )}
       </div>
       <div className="flex flex-wrap p-2">
         <div className="w-full">

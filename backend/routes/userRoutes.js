@@ -122,9 +122,18 @@ router.post('/bookappointment', isAuth, async (req, res) => {
 // fetch appointments of doctor selected
 
 router.get('/allAppointments/:doctorId', isAuth, async (req, res) => {
+  const { role } = req.user;
   const { doctorId } = req.params;
+
   try {
-    const allAppointments = await Appointment.findAll({ where: { doctorId } });
+    if (role === 'admin' && doctorId && doctorId !== 'all') {
+      const allAppointments = await Appointment.findAll({
+        where: { doctorId },
+      });
+
+      return res.status(200).json(allAppointments);
+    }
+    const allAppointments = await Appointment.findAll();
     return res.status(200).json(allAppointments);
   } catch (error) {
     console.log(error);

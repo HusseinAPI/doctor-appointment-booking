@@ -20,12 +20,12 @@ const defineDoctorModel = (sequelize, DataTypes) => {
       },
       buttonColor: {
         type: DataTypes.STRING,
-        allowNull: false,
+        allowNull: true,
         field: 'button_color',
       },
       imageUrl: {
         type: DataTypes.STRING,
-        allowNull: false,
+        allowNull: true,
         field: 'image_url',
       },
       bio: {

@@ -19,7 +19,7 @@ router.get('/doctors', async (req, res) => {
 
 router.get('/doctors/:doctorName', isAuth, async (req, res) => {
   const { doctorName } = req.params;
-  console.log(doctorName);
+
   try {
     if (doctorName) {
       const doctor = await Doctor.findOne({ where: { name: doctorName } });

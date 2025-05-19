@@ -31,7 +31,8 @@ export const getSelectedDoctor = createAsyncThunk(
     const { rejectWithValue } = thunkAPI;
     try {
       const response = await axios.get(
-        `http://localhost:5000/http://localhost:5000/api/appointment/doctors/${doctorName}`
+        `http://localhost:5000/api/appointment/doctors/${doctorName}`,
+        { withCredentials: true }
       );
 
       const doctor = await response.data;

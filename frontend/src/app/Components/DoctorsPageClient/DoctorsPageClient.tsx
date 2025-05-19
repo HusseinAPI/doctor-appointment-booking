@@ -16,7 +16,7 @@ const DoctorPageClient = ({ doctors }: { doctors: [] }) => {
 
   useEffect(() => {
     dispatch(userStayLogged());
-    dispatch(emptyAppointments())
+    dispatch(emptyAppointments());
   }, []);
 
   useEffect(() => {
@@ -72,13 +72,15 @@ const DoctorPageClient = ({ doctors }: { doctors: [] }) => {
                   key={index}
                   className="w-4/5 sm:w-max bg-white shadow-lg rounded-2xl mt-5 p-5 flex flex-col items-center"
                 >
-                  <Image
-                    src={`${doctor.imageUrl}`}
-                    alt={doctor.name}
-                    width={200}
-                    height={200}
-                    className="w-full h-56 object-cover rounded-t-lg"
-                  />
+                  {doctor.imageUrl && doctor.imageUrl.trim() !== '' && (
+                    <Image
+                      src={doctor.imageUrl}
+                      alt={doctor.name}
+                      width={64}
+                      height={64}
+                      className="rounded-full mb-3"
+                    />
+                  )}
                   <span
                     className={`px-3 py-1 rounded-full text-sm font-medium ${doctor.buttonColor}`}
                   >

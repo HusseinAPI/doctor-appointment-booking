@@ -5,6 +5,7 @@ import db from './models/index.js';
 import cookieParser from 'cookie-parser';
 import userRouter from './routes/userRoutes.js';
 import doctorRouter from './routes/doctorRoutes.js';
+import adminRouter from './routes/adminRoutes.js';
 
 dotenv.config();
 
@@ -14,7 +15,7 @@ const server = express();
 
 const corsOptions = {
   origin: 'http://localhost:3000',
-  methods: ['GET', 'POST'],
+  methods: ['GET', 'POST', 'PUT', 'DELETE'],
   allowedHeaders: ['Content-Type', 'Authorization'],
   credentials: true,
 };
@@ -35,6 +36,7 @@ db.sequelize
 
 server.use('/api/auth', userRouter);
 server.use('/api/appointment', doctorRouter);
+server.use('/api/adminPanelOfCenter', adminRouter);
 
 server.listen(PORT, () => {
   console.log(` Server running on http://localhost:${PORT}`);

@@ -24,9 +24,15 @@ export default function Page() {
 
   useEffect(() => {
     dispatch(userStayLogged());
-    // dispatch(fetchAppointments(doctorSelected.id));
+
     dispatch(getSelectedDoctor(path));
   }, []);
+
+  useEffect(() => {
+    if (doctorSelected?.id) {
+      dispatch(fetchAppointments(doctorSelected.id));
+    }
+  }, [doctorSelected]);
 
   // Check date in list of days and times if available
 
@@ -77,6 +83,12 @@ export default function Page() {
 
   const [isOpen, setOpen] = useState<boolean>(false);
   const [scheduleDate, setScheduleDate] = useState('');
+
+  useEffect(() => {
+    if (doctorSelected?.id) {
+      dispatch(fetchAppointments(doctorSelected.id));
+    }
+  }, [isOpen]);
 
   return (
     isLogged && (
