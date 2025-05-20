@@ -37,7 +37,7 @@ const Dashboard = () => {
   return (
     isLogged && (
       <div className="h-[738px] rounded-l-2xl ">
-        <div className="fixed left-20 rounded-4xl bg-blue-100 w-full h-full overflow-y-scroll">
+        <div className="fixed left-20 rounded-4xl bg-blue-100 w-full h-[740px] overflow-y-scroll">
           <div className="flex justify-between items-center w-1/2 m-6">
             <input
               type="text"
@@ -46,7 +46,7 @@ const Dashboard = () => {
             />
           </div>
 
-          <div className="bg-white rounded-2xl w-1/2 m-6">
+          <div className="bg-white rounded-2xl w-8/12 sm:w-1/2 m-6">
             <div className="flex justify-between items-center p-6">
               <div>
                 <h2 className="text-xl font-semibold">
@@ -67,8 +67,8 @@ const Dashboard = () => {
           <h2 className="text-lg font-semibold mx-6 my-2">
             Previous Appointments
           </h2>
-          <div className="bg-white p-5 rounded-xl shadow mx-6 mb-6 w-10/12">
-            <ul className="space-y-4">
+          <div className="bg-white p-5 rounded-xl shadow mx-6 w-8/12 sm:w-9/12 md:w-10/12">
+            <ul>
               {previousAppointments.length === 0 ? (
                 <li className="text-gray-500">No Previous Appointments</li>
               ) : (
@@ -106,21 +106,25 @@ const Dashboard = () => {
                 return (
                   <div
                     key={index}
-                    className="rounded-xl mb-2 w-11/12 bg-white hover:bg-indigo-600 hover:text-white transition"
+                    className="rounded-xl mb-2 w-10/12 md:w-11/12 bg-white hover:bg-indigo-600 hover:text-white transition"
                   >
                     <div className="p-4 flex justify-between items-center">
                       <div className="flex items-center gap-2">
-                        <span>
+                        <span className="text-sm sm:text-base">
                           {appointments.firstName + ' ' + appointments.lastName}
                         </span>
                       </div>
-                      <p>
+                      <p className="text-sm sm:text-base">
                         Doctor:
                         {' ' + doctorMap[appointments.doctorId].name ||
                           'Not found'}
                       </p>
-                      <p>{appointments.dateOfAppointment.slice(0, 10)}</p>
-                      <p>{appointments.dateOfAppointment.slice(11, 16)}</p>
+                      <p className="text-sm sm:text-base">
+                        {appointments.dateOfAppointment.slice(0, 10)}
+                      </p>
+                      <p className="text-sm sm:text-base">
+                        {appointments.dateOfAppointment.slice(11, 16)}
+                      </p>
                       <CheckCircle className="text-white" />
                     </div>
                   </div>

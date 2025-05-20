@@ -146,12 +146,66 @@ export const fetchUserAppointments = createAsyncThunk(
   }
 );
 
+export const getUserInfo = createAsyncThunk(
+  'user/getUserInfo',
+  async (_N_E_STYLE_LOAD, thunkAPI) => {
+    const { rejectWithValue } = thunkAPI;
+    try {
+      const response = await axios.get(
+        'http://localhost:5000/api/auth/userInfo',
+        { withCredentials: true }
+      );
+
+      const userInfo = await response.data;
+
+      return userInfo;
+    } catch (error) {
+      console.log(error);
+      rejectWithValue(error.message);
+    }
+  }
+);
+
+// LogOut
+
+export const logOut = createAsyncThunk(
+  'user/logOut',
+  async (_N_E_STYLE_LOAD, thunkAPI) => {
+    const { rejectWithValue } = thunkAPI;
+    try {
+      const response = await axios.get(
+        'http://localhost:5000/api/auth/logOut',
+        { withCredentials: true }
+      );
+
+      const result = await response.data;
+
+      if (result) {
+        return result;
+      }
+    } catch (error) {
+      console.log(error);
+      rejectWithValue(error.message);
+    }
+  }
+);
+
+type User = {
+  id: number;
+  name: string;
+  email: string;
+  role: string;
+  phone: string;
+  dateOfBirth: string;
+};
+
 type AuthState = {
   isLogged: boolean;
   name: string | null;
   role: string | null;
   isBooking: string | null;
   appointments: [] | undefined;
+  user: User | null;
 };
 
 const initialState: AuthState = {
@@ -160,6 +214,7 @@ const initialState: AuthState = {
   role: null,
   isBooking: null,
   appointments: [],
+  user: null,
 };
 
 type MyPayloadType = {
@@ -172,6 +227,8 @@ const authSlice = createSlice({
   name: 'auth',
   initialState,
   reducers: {
+    // Empty Appointments State
+
     emptyAppointments: (state) => {
       state.appointments = [];
     },
@@ -205,6 +262,16 @@ const authSlice = createSlice({
       })
       .addCase(fetchUserAppointments.fulfilled, (state, action) => {
         state.appointments = action.payload;
+      })
+      .addCase(getUserInfo.fulfilled, (state, action) => {
+        state.user = action.payload;
+      })
+      .addCase(logOut.fulfilled, (state) => {
+        state.isLogged = false;
+        state.name = null;
+        state.user = null;
+        state.role = null;
+        state.appointments = [];
       }),
 });
 

@@ -32,7 +32,7 @@ router.delete('/deleteAppointment', isAuth, async (req, res) => {
       const deleted = await Appointment.destroy({
         where: { id: appId },
       });
-      console.log(deleted);
+
       if (deleted === 0) {
         return res.status(404).json({ message: 'Appointment not deleted' });
       }
@@ -138,15 +138,13 @@ router.put('/deleteDoctor', isAuth, async (req, res) => {
         where: { id },
       });
 
-      const deleteDocAppoints = await Appointment.destroy({
-        where: { id },
+      await Appointment.destroy({
+        where: { doctorId: id },
       });
 
-      if (deleted === 0 || deleteDocAppoints === 0) {
+      if (deleted === 0) {
         return res.status(404).json({ message: 'Doctor not found' });
       }
-      console.log(deleted);
-      console.log(deleteDocAppoints);
 
       return res.status(200).json({ message: 'Doctor deleted successfully' });
     }

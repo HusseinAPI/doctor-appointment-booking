@@ -6,7 +6,7 @@ export default function DoctorCard({
   doctorSelected: [] | null;
 }) {
   return (
-    <div className="flex bg-white rounded-2xl shadow-md p-6 w-1/2">
+    <div className="flex bg-white rounded-2xl shadow-md p-6 sm:w-10/12 md:w-9/12 lg:w-1/2">
       <div className="flex items-center w-9/12">
         {doctorSelected?.imageUrl ? (
           <Image

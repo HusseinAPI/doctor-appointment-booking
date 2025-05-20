@@ -48,10 +48,10 @@ const DoctorPageClient = ({ doctors }: { doctors: [] }) => {
       <div
         className={`${
           isLogged ? 'fixed bg-blue-100' : ''
-        } overflow-auto left-20 rounded-4xl  w-full h-full`}
+        } overflow-auto left-20 rounded-4xl  w-full h-[740px]`}
       >
-        <div className="p-10 ml-30">
-          <div className="flex justify-center sm:justify-start mb-5 mt-10">
+        <div className="p-10 ml-10">
+          <div className="flex justify-start mb-5 mt-10">
             <select
               value={filter}
               onChange={(e) => setFilter(e.target.value)}
@@ -65,12 +65,12 @@ const DoctorPageClient = ({ doctors }: { doctors: [] }) => {
             </select>
           </div>
 
-          <div className="flex justify-center sm:justify-between items-center flex-wrap w-5/6">
+          <div className="flex justify-between items-center flex-wrap w-5/6">
             {filteredDoctors.length > 0 ? (
               filteredDoctors.map((doctor, index) => (
                 <div
                   key={index}
-                  className="w-4/5 sm:w-max bg-white shadow-lg rounded-2xl mt-5 p-5 flex flex-col items-center"
+                  className="w-4/5 w-max bg-white shadow-lg rounded-2xl mt-5 p-5 flex flex-col items-center"
                 >
                   {doctor.imageUrl && doctor.imageUrl.trim() !== '' && (
                     <Image
@@ -97,9 +97,13 @@ const DoctorPageClient = ({ doctors }: { doctors: [] }) => {
                     className="mt-4 px-4 py-2 text-blue-600 font-semibold border border-blue-600 rounded-lg hover:bg-blue-600 hover:text-white cursor-pointer transition"
                     onClick={() => handleSelectDoctor(doctor)}
                   >
-                    <Link href={`/user/appointments/${doctor.name}`}>
-                      Book An Appointment
-                    </Link>
+                    {isLogged ? (
+                      <Link href={`/user/appointments/${doctor.name}`}>
+                        Book An Appointment
+                      </Link>
+                    ) : (
+                      <Link href={`/auth/signin`}>Book An Appointment</Link>
+                    )}
                   </button>
                 </div>
               ))

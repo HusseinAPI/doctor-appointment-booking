@@ -93,7 +93,7 @@ export default function Page() {
   return (
     isLogged && (
       <div className="rounded-l-2xl fixed overflow-auto left-20 rounded-4xl bg-blue-100 w-full h-full">
-        <div className="bg-white p-6 flex justify-around flex-col md:flex-row gap-8">
+        <div className="bg-white p-6 flex flex-wrap justify-around flex-col md:flex-row gap-8">
           <DoctorCard doctorSelected={doctorSelected} />
           <Calendar
             currentDate={currentDate}

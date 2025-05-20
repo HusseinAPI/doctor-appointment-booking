@@ -3,7 +3,12 @@ const router = express.Router();
 import bcrypt from 'bcrypt';
 import db from '../models/index.js';
 const { User, Appointment, Doctor } = db;
-import { generateToken, isAuth, setTokenInCookie } from '../utils.js';
+import {
+  generateToken,
+  isAuth,
+  setTokenInCookie,
+  clearCookie,
+} from '../utils.js';
 
 // SignIn
 
@@ -93,7 +98,7 @@ router.get('/patientAuth', isAuth, (req, res) => {
   }
 });
 
-// Book an appointment
+// Book an Appointment
 
 router.post('/bookappointment', isAuth, async (req, res) => {
   const { firstName, lastName, dateOfBirth, email, phone, date, doctor } =
@@ -119,7 +124,7 @@ router.post('/bookappointment', isAuth, async (req, res) => {
   }
 });
 
-// fetch appointments of doctor selected
+// Fetch all Appointments of Doctor selected
 
 router.get('/allAppointments/:doctorId', isAuth, async (req, res) => {
   const { role } = req.user;
@@ -141,7 +146,7 @@ router.get('/allAppointments/:doctorId', isAuth, async (req, res) => {
   }
 });
 
-// Check user appointments
+// fetch User Appointments
 
 router.get('/userAppointments', isAuth, async (req, res) => {
   const { id } = req.user;
@@ -157,6 +162,43 @@ router.get('/userAppointments', isAuth, async (req, res) => {
 
     const doctors = await Doctor.findAll({ where: { id: uniqueDoctorIds } });
     return res.status(200).json({ userAppointments, doctors });
+  } catch (error) {
+    console.log(error);
+    return res.status(500).json({ message: 'Server Internal error' });
+  }
+});
+
+// Get Profile User Info
+
+router.get('/userInfo', isAuth, async (req, res) => {
+  const { id } = req.user;
+
+  try {
+    const user = await User.findOne({ where: { id: id } });
+
+    if (user) {
+      const userFilter = {
+        name: user.name,
+        email: user.email,
+        phone: user.phone,
+        dateOfBirth: user.dateOfBirth,
+        role: user.role,
+      };
+      return res.status(200).json(userFilter);
+    }
+    return res.status(404).json({ message: 'Not Found User' });
+  } catch (error) {
+    console.log(error);
+    return res.status(500).json({ message: 'Server Internal error' });
+  }
+});
+
+// LogOut
+
+router.get('/logOut', async (req, res) => {
+  try {
+    clearCookie(res);
+    return res.status(200).json({ message: 'Logout Success' });
   } catch (error) {
     console.log(error);
     return res.status(500).json({ message: 'Server Internal error' });

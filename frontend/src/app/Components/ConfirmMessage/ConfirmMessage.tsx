@@ -1,4 +1,5 @@
 import React from 'react';
+import { useRouter } from 'next/navigation';
 import { useDispatch } from 'react-redux';
 
 export default function ConfirmDeletePopup({
@@ -8,15 +9,16 @@ export default function ConfirmDeletePopup({
   actionToDispatch,
 }) {
   const dispatch = useDispatch();
+  const router = useRouter();
 
   const hanldeDeleteDoctor = () => {
-    const itemId = {
-      id: itemToDelete,
-    };
-
-    if (itemId.id) {
-      dispatch(actionToDispatch(itemId.id));
+    if (itemToDelete) {
+      dispatch(actionToDispatch(itemToDelete));
       setDeleteConfirm(false);
+    } else {
+      dispatch(actionToDispatch());
+      setDeleteConfirm(false);
+      router.push('/auth/signin');
     }
   };
 

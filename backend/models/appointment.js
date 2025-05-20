@@ -1,6 +1,6 @@
 const defineAppointmentModel = (Sequelize, DataTypes) => {
-  const Appointement = Sequelize.define(
-    'Appointement',
+  const Appointment = Sequelize.define(
+    'Appointment',
     {
       userId: { type: DataTypes.INTEGER, allowNull: false, field: 'user_id' },
       firstName: {
@@ -51,7 +51,13 @@ const defineAppointmentModel = (Sequelize, DataTypes) => {
     }
   );
 
-  return Appointement;
+  Appointment.associate = (models) => {
+    Appointment.belongsTo(models.Doctor, {
+      foreignKey: 'doctorId',
+    });
+  };
+
+  return Appointment;
 };
 
 export default defineAppointmentModel;

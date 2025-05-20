@@ -27,11 +27,13 @@ export default function AppointmentsMangement() {
 
   const [search, setSearch] = useState('');
 
-  const filtered = appointments.filter(
-    (app) =>
-      app.firstName.toLowerCase().includes(search.toLowerCase()) ||
-      app.lastName.toLowerCase().includes(search.toLowerCase())
-  );
+  const filtered = Array.isArray(appointments)
+    ? appointments.filter(
+        (app) =>
+          app.firstName.toLowerCase().includes(search.toLowerCase()) ||
+          app.lastName.toLowerCase().includes(search.toLowerCase())
+      )
+    : [];
 
   // Delete appointment
 
@@ -45,10 +47,10 @@ export default function AppointmentsMangement() {
   return (
     theRole && (
       <div className="h-[738px] rounded-l-2xl">
-        <div className="fixed overflow-auto left-20 rounded-4xl bg-blue-100 w-full h-full">
+        <div className="fixed overflow-auto left-20 rounded-4xl bg-blue-100 w-full h-[740px]">
           <div className="p-6">
-            <div className="flex flex-col md:flex-row items-center justify-between w-1/2 mb-4 gap-4">
-              <div className="relative md:w-1/3">
+            <div className="flex flex-col sm:flex-row items-center justify-between w-10/12 mb-4 gap-4">
+              <div className="relative w-10/12 sm:w-6/12">
                 <Calendar
                   className="absolute left-3 top-1/2 -translate-y-1/2 text-gray-400"
                   size={18}
@@ -79,7 +81,7 @@ export default function AppointmentsMangement() {
                 return (
                   <div
                     key={index}
-                    className="border border-gray-200 rounded-2xl p-4 shadow-sm hover:shadow-md transition bg-white flex flex-col"
+                    className="mx-auto sm:mx-0 border border-gray-200 rounded-2xl p-4 shadow-sm hover:shadow-md transition bg-white flex flex-col w-10/12 md:w-full"
                   >
                     <h3 className="font-semibold text-lg">
                       {appointment.firstName + ' ' + appointment.lastName}

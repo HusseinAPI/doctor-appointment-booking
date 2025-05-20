@@ -30,7 +30,7 @@ export default function Calendar({
   const weekdays = ['Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat', 'Sun'];
 
   return (
-    <div className="bg-blue-600 rounded-2xl shadow-md p-6 w-full max-w-md">
+    <div className="bg-blue-600 rounded-2xl shadow-md p-6 w-full max-w-md mr-15">
       <div className="flex justify-between items-center mb-4">
         <button onClick={onPrevMonth} className="text-xl text-white">
           ‹

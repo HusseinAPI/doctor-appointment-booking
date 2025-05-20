@@ -47,6 +47,14 @@ const defineDoctorModel = (sequelize, DataTypes) => {
     }
   );
 
+  Doctor.associate = (models) => {
+    Doctor.hasMany(models.Appointment, {
+      foreignKey: 'doctorId',
+      onDelete: 'CASCADE',
+      hooks: true,
+    });
+  };
+
   return Doctor;
 };
 

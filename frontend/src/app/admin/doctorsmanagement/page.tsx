@@ -58,9 +58,9 @@ export default function DoctorsMangement() {
   return (
     theRole && (
       <div className="h-[738px] rounded-l-2xl">
-        <div className="fixed overflow-auto left-20 rounded-4xl bg-blue-100 w-full h-full">
-          <div className="flex justify-between w-1/2 p-6">
-            <div className="relative w-3/4 md:w-1/3">
+        <div className="fixed overflow-auto left-20 rounded-4xl bg-blue-100 w-full h-[740px]">
+          <div className="flex justify-between w-10/12 md:w-8/12 p-6">
+            <div className="relative w-6/12">
               <Search
                 className="absolute left-3 top-1/3 -translate-y-1/2 text-gray-400"
                 size={18}
@@ -83,11 +83,11 @@ export default function DoctorsMangement() {
               </button>
             </div>
           </div>
-          <div className="w-11/12 grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 p-4">
+          <div className="w-11/12 mx-auto md:mx-0 grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 p-4">
             {filteredDoctors.map((doc, idx) => (
               <div
                 key={idx}
-                className="border border-gray-200 rounded-2xl p-4 shadow-sm hover:shadow-md transition bg-white flex flex-col items-center"
+                className="border border-gray-200 rounded-2xl p-4 shadow-sm hover:shadow-md transition bg-white flex flex-col w-10/12 md:w-full items-center"
               >
                 {doc.imageUrl && doc.imageUrl.trim() !== '' && (
                   <Image

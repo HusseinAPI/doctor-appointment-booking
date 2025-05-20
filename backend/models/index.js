@@ -33,4 +33,10 @@ const db = {
   Appointment: AppointmentModel(sequelize, DataTypes),
 };
 
+Object.values(db).forEach((model) => {
+  if (model.associate) {
+    model.associate(db);
+  }
+});
+
 export default db;
