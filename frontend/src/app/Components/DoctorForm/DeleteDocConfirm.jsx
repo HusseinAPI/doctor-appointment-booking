@@ -1,6 +1,6 @@
-import { deleteDoctor } from '@/app/redux/adminSlice';
 import React from 'react';
 import { useDispatch } from 'react-redux';
+import { deleteDoctor } from '@/app/redux/adminSlice';
 
 export default function ConfirmDeletePopup({
   deleteConfirm,

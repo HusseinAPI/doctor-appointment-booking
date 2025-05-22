@@ -1,4 +1,4 @@
-import dayjs, { Dayjs } from 'dayjs';
+import dayjs from 'dayjs';
 
 export default function Calendar({
   currentDate,
@@ -6,12 +6,6 @@ export default function Calendar({
   onSelectDate,
   onNextMonth,
   onPrevMonth,
-}: {
-  currentDate: Dayjs;
-  selectedDate: string;
-  onSelectDate: (day: number) => void;
-  onNextMonth: () => void;
-  onPrevMonth: () => void;
 }) {
   const startOfMonth = currentDate.startOf('month');
   const endOfMonth = currentDate.endOf('month');
@@ -58,6 +52,10 @@ export default function Calendar({
               ).day()
             );
 
+          const isBefore = dayjs(
+            new Date(currentDate.year(), currentDate.month(), val)
+          ).isBefore(dayjs());
+
           const baseClass =
             'rounded-lg p-2 h-10 flex items-center justify-center';
 
@@ -67,6 +65,8 @@ export default function Calendar({
             styleClass = 'bg-gray-400 text-transparent';
           } else if (isWeekend) {
             styleClass = 'bg-gray-400 text-gray-500 cursor-not-allowed';
+          } else if (isBefore) {
+            styleClass = 'bg-amber-200 text-gray-500 cursor-not-allowed';
           } else {
             styleClass =
               'bg-white text-gray-800 hover:bg-amber-600 hover:text-white';

@@ -3,21 +3,29 @@ import React, { useState, useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { getUserInfo, userStayLogged, logOut } from '@/app/redux/userSlice';
 import ConfirmMessage from '@/app/Components/ConfirmMessage/ConfirmMessage';
+import { usePathname, useRouter } from 'next/navigation';
 
 export default function Profile() {
   const isLogged = useSelector((state) => state.userSlice.isLogged);
   const user = useSelector((state) => state.userSlice.user);
 
   const dispatch = useDispatch();
+  const router = useRouter();
+
+  const path = usePathname();
 
   useEffect(() => {
     dispatch(userStayLogged());
     dispatch(getUserInfo());
+    if (!isLogged) {
+      localStorage.setItem('lastPath', path);
+      router.push('/auth/signin');
+    }
   }, []);
 
   // LogOut
 
-  const [isOpen, setOpen] = useState<boolean>(false);
+  const [isOpen, setOpen] = useState(false);
 
   if (!isLogged || !user) {
     return (

@@ -9,16 +9,23 @@ import AddDoctorForm from '@/app/Components/DoctorForm/AddDoctorForm';
 import EditDoctorForm from '@/app/Components/DoctorForm/EditDoctorForm';
 import DeleteDocConfirm from '@/app/Components/DoctorForm/DeleteDocConfirm';
 import { checkIsAdmin } from '@/app/redux/adminSlice';
+import { usePathname, useRouter } from 'next/navigation';
 
 export default function DoctorsMangement() {
   const doctors = useSelector((state) => state.doctorSlice.doctors);
   const theRole = useSelector((state) => state.adminSlice.theRole);
 
   const dispatch = useDispatch();
+  const router = useRouter();
+
+  const path = usePathname();
 
   useEffect(() => {
     dispatch(userStayLogged());
     dispatch(checkIsAdmin());
+    if (!theRole) {
+      router.push('/auth/signin');
+    }
   }, []);
 
   // Search doctor
@@ -31,7 +38,7 @@ export default function DoctorsMangement() {
 
   // Add doctor
 
-  const [addFormOpen, setAddFormOpen] = useState<boolean>(false);
+  const [addFormOpen, setAddFormOpen] = useState(false);
 
   useEffect(() => {
     dispatch(getDoctors());
@@ -39,7 +46,7 @@ export default function DoctorsMangement() {
 
   // Edit doctor
 
-  const [editFormOpen, setEditFormOpen] = useState<boolean>(false);
+  const [editFormOpen, setEditFormOpen] = useState(false);
   const [editableData, setEditableData] = useState();
 
   useEffect(() => {

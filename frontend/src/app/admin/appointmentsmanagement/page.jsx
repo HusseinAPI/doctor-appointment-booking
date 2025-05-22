@@ -4,7 +4,7 @@ import { Trash2, Plus, Calendar } from 'lucide-react';
 import { useDispatch, useSelector } from 'react-redux';
 import { fetchAppointments, userStayLogged } from '@/app/redux/userSlice';
 import { checkIsAdmin, deleteAppointment } from '@/app/redux/adminSlice';
-import { useRouter } from 'next/navigation';
+import { usePathname, useRouter } from 'next/navigation';
 import { getDoctors } from '@/app/redux/doctorSlice';
 import ConfirmMessage from '@/app/Components/ConfirmMessage/ConfirmMessage';
 
@@ -13,14 +13,19 @@ export default function AppointmentsMangement() {
   const appointments = useSelector((state) => state.userSlice.appointments);
   const doctors = useSelector((state) => state.doctorSlice.doctors);
 
-  const router = useRouter();
   const dispatch = useDispatch();
+  const router = useRouter();
+
+  const path = usePathname();
 
   useEffect(() => {
     dispatch(userStayLogged());
     dispatch(checkIsAdmin());
     dispatch(getDoctors());
     dispatch(fetchAppointments('all'));
+    if (!theRole) {
+      router.push('/auth/signin');
+    }
   }, []);
 
   // Search appointment
@@ -37,7 +42,7 @@ export default function AppointmentsMangement() {
 
   // Delete appointment
 
-  const [deleteConfirm, setDeleteConfirm] = useState<boolean>();
+  const [deleteConfirm, setDeleteConfirm] = useState();
   const [appointId, setAppointId] = useState();
 
   useEffect(() => {

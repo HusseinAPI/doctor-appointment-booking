@@ -8,13 +8,13 @@ import { useRouter } from 'next/navigation';
 const SignIn = () => {
   const isLogged = useSelector((state) => state.userSlice.isLogged);
 
-  const email = useRef<HTMLInputElement>(null);
-  const password = useRef<HTMLInputElement>(null);
+  const email = useRef(null);
+  const password = useRef(null);
 
   const dispatch = useDispatch();
   const router = useRouter();
 
-  const handleSubmit = (e: React.FormEvent) => {
+  const handleSubmit = (e) => {
     e.preventDefault();
     const userInfo = {
       email: email.current?.value,
@@ -34,7 +34,8 @@ const SignIn = () => {
 
   useEffect(() => {
     if (isLogged) {
-      router.push('/user/dashboard');
+      const lastPath = localStorage.getItem('lastPath');
+      router.push(lastPath);
     }
   }, [isLogged, router]);
 

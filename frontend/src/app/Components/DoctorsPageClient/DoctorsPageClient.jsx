@@ -5,18 +5,23 @@ import Link from 'next/link';
 import { useDispatch, useSelector } from 'react-redux';
 import { emptyAppointments, userStayLogged } from '@/app/redux/userSlice';
 import { selectDoctor } from '@/app/redux/doctorSlice';
-import { useRouter } from 'next/navigation';
+import { usePathname, useRouter } from 'next/navigation';
 
-const DoctorPageClient = ({ doctors }: { doctors: [] }) => {
+const DoctorPageClient = ({ doctors }) => {
   const isLogged = useSelector((state) => state.userSlice.isLogged);
 
   const dispatch = useDispatch();
-
   const router = useRouter();
+
+  const path = usePathname();
 
   useEffect(() => {
     dispatch(userStayLogged());
     dispatch(emptyAppointments());
+    if (!isLogged) {
+      localStorage.setItem('lastPath', path);
+      router.push('/auth/signin');
+    }
   }, []);
 
   useEffect(() => {
@@ -27,7 +32,7 @@ const DoctorPageClient = ({ doctors }: { doctors: [] }) => {
     }
   }, [isLogged, router]);
 
-  const [filter, setFilter] = useState<string>('All');
+  const [filter, setFilter] = useState('All');
 
   const specialties = [
     'All',
@@ -65,12 +70,12 @@ const DoctorPageClient = ({ doctors }: { doctors: [] }) => {
             </select>
           </div>
 
-          <div className="flex justify-between items-center flex-wrap w-5/6">
+          <div className="flex justify-between items-center flex-wrap w-11/12">
             {filteredDoctors.length > 0 ? (
               filteredDoctors.map((doctor, index) => (
                 <div
                   key={index}
-                  className="w-4/5 w-max bg-white shadow-lg rounded-2xl mt-5 p-5 flex flex-col items-center"
+                  className="w-max bg-white shadow-lg rounded-2xl mt-5 p-5 flex flex-col items-center"
                 >
                   {doctor.imageUrl && doctor.imageUrl.trim() !== '' && (
                     <Image

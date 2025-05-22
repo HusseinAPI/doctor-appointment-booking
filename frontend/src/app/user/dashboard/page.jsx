@@ -6,6 +6,7 @@ import profImage from '../../../../public/about.png';
 import { useDispatch, useSelector } from 'react-redux';
 import { userStayLogged, fetchUserAppointments } from '@/app/redux/userSlice';
 import dayjs from 'dayjs';
+import { usePathname, useRouter } from 'next/navigation';
 
 const Dashboard = () => {
   const isLogged = useSelector((state) => state.userSlice.isLogged);
@@ -24,10 +25,17 @@ const Dashboard = () => {
   }, {});
 
   const dispatch = useDispatch();
+  const router = useRouter();
+
+  const path = usePathname();
 
   useEffect(() => {
     dispatch(userStayLogged());
     dispatch(fetchUserAppointments());
+    if (!isLogged) {
+      localStorage.setItem('lastPath', path);
+      router.push('/auth/signin');
+    }
   }, []);
 
   const previousAppointments = userAppointments.filter((app) =>

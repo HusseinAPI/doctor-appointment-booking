@@ -11,17 +11,17 @@ import { useRouter } from 'next/navigation';
 const SignUp = () => {
   const isLogged = useSelector((state) => state.userSlice.isLogged);
 
-  const name = useRef<HTMLInputElement>(null);
-  const email = useRef<HTMLInputElement>(null);
-  const phone = useRef<HTMLInputElement>(null);
-  const dateOfBirth = useRef<HTMLInputElement>(null);
-  const password = useRef<HTMLInputElement>(null);
-  const confirmPass = useRef<HTMLInputElement>(null);
+  const name = useRef(null);
+  const email = useRef(null);
+  const phone = useRef(null);
+  const dateOfBirth = useRef(null);
+  const password = useRef(null);
+  const confirmPass = useRef(null);
 
   const dispatch = useDispatch();
   const router = useRouter();
 
-  const handleSubmit = (e: React.FormEvent) => {
+  const handleSubmit = (e) => {
     e.preventDefault();
     const userInfo = {
       name: name.current?.value,

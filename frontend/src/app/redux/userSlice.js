@@ -2,20 +2,9 @@ import { createSlice, createAsyncThunk } from '@reduxjs/toolkit';
 import axios from 'axios';
 import { jwtDecode } from 'jwt-decode';
 
-type Credentials = {
-  email: string;
-  password: string;
-};
-
-type RegisterData = {
-  name: string;
-  phone: string;
-  dateOfBirth: string;
-} & Credentials;
-
 export const signIn = createAsyncThunk(
   'auth/signIn',
-  async (credentials: Credentials, thunkAPI) => {
+  async (credentials, thunkAPI) => {
     const { rejectWithValue } = thunkAPI;
     try {
       const response = await axios.post(
@@ -42,7 +31,7 @@ export const signIn = createAsyncThunk(
 
 export const signUp = createAsyncThunk(
   'auth/signUp',
-  async (registerData: RegisterData, thunkAPI) => {
+  async (registerData, thunkAPI) => {
     const { rejectWithValue } = thunkAPI;
     try {
       const response = await axios.post(
@@ -190,37 +179,13 @@ export const logOut = createAsyncThunk(
   }
 );
 
-type User = {
-  id: number;
-  name: string;
-  email: string;
-  role: string;
-  phone: string;
-  dateOfBirth: string;
-};
-
-type AuthState = {
-  isLogged: boolean;
-  name: string | null;
-  role: string | null;
-  isBooking: string | null;
-  appointments: [] | undefined;
-  user: User | null;
-};
-
-const initialState: AuthState = {
+const initialState = {
   isLogged: false,
   name: null,
   role: null,
   isBooking: null,
   appointments: [],
   user: null,
-};
-
-type MyPayloadType = {
-  id: number;
-  role: string;
-  name: string;
 };
 
 const authSlice = createSlice({
@@ -237,13 +202,13 @@ const authSlice = createSlice({
     builder
       .addCase(signIn.fulfilled, (state, action) => {
         state.isLogged = true;
-        const decode = jwtDecode<MyPayloadType>(action.payload);
+        const decode = jwtDecode(action.payload);
         state.name = decode.name;
         state.role = decode.role;
       })
       .addCase(signUp.fulfilled, (state, action) => {
         state.isLogged = true;
-        const decode = jwtDecode<MyPayloadType>(action.payload);
+        const decode = jwtDecode(action.payload);
         state.name = decode.name;
         state.role = decode.role;
       })

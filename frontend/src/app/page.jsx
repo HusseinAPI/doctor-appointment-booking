@@ -8,8 +8,8 @@ import Image from 'next/image';
 import { useDispatch, useSelector } from 'react-redux';
 import { useEffect } from 'react';
 import { getDoctors } from './redux/doctorSlice';
-import { useRouter } from 'next/navigation';
 import { userStayLogged } from './redux/userSlice';
+import { useRouter } from 'next/navigation';
 
 export default function Home() {
   const isLogged = useSelector((state) => state.userSlice.isLogged);
@@ -20,13 +20,10 @@ export default function Home() {
   useEffect(() => {
     dispatch(getDoctors());
     dispatch(userStayLogged());
-  }, []);
-
-  useEffect(() => {
-    if (isLogged) {
+    if (!isLogged) {
       router.push('/user/dashboard');
     }
-  }, [isLogged]);
+  }, []);
 
   return (
     <>

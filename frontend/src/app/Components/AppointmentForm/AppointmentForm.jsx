@@ -3,21 +3,13 @@ import dayjs from 'dayjs';
 import { useDispatch, useSelector } from 'react-redux';
 import { bookAppointment } from '@/app/redux/userSlice';
 
-export default function AppointmentForm({
-  isOpen,
-  setOpen,
-  scheduleDate,
-}: {
-  isOpen: boolean;
-  setOpen: React.Dispatch<React.SetStateAction<boolean>>;
-  scheduleDate: string;
-}) {
+export default function AppointmentForm({ isOpen, setOpen, scheduleDate }) {
   const firstName = useRef(null);
   const lastName = useRef(null);
   const email = useRef(null);
   const dateOfBirth = useRef(null);
   const phone = useRef(null);
-  const [haveInsurance, setInsurance] = useState<string>('no');
+  const [haveInsurance, setInsurance] = useState('no');
 
   const doctorSelected = useSelector(
     (state) => state.doctorSlice.doctorSelected
