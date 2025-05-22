@@ -7,6 +7,7 @@ import { HiClipboardList } from 'react-icons/hi';
 import { useDispatch, useSelector } from 'react-redux';
 import { signUp } from '@/app/redux/userSlice';
 import { useRouter } from 'next/navigation';
+import { toast } from 'react-toastify';
 
 const SignUp = () => {
   const isLogged = useSelector((state) => state.userSlice.isLogged);
@@ -21,7 +22,7 @@ const SignUp = () => {
   const dispatch = useDispatch();
   const router = useRouter();
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
     const userInfo = {
       name: name.current?.value,
@@ -43,13 +44,18 @@ const SignUp = () => {
       userInfo.password.length > 0 &&
       confirmPass.current?.value.length > 0
     ) {
-      dispatch(signUp(userInfo));
-      name.current.value = '';
-      email.current.value = '';
-      phone.current.value = '';
-      dateOfBirth.current.value = '';
-      password.current.value = '';
-      confirmPass.current.value = '';
+      try {
+        await dispatch(signUp(userInfo)).unwrap();
+        toast.success('Register successful!');
+        name.current.value = '';
+        email.current.value = '';
+        phone.current.value = '';
+        dateOfBirth.current.value = '';
+        password.current.value = '';
+        confirmPass.current.value = '';
+      } catch (error) {
+        toast.success('Register Failed');
+      }
     }
   };
 

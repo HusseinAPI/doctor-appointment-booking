@@ -1,6 +1,7 @@
 import React from 'react';
 import { useRouter } from 'next/navigation';
 import { useDispatch } from 'react-redux';
+import { toast } from 'react-toastify';
 
 export default function ConfirmDeletePopup({
   deleteConfirm,
@@ -11,13 +12,16 @@ export default function ConfirmDeletePopup({
   const dispatch = useDispatch();
   const router = useRouter();
 
-  const hanldeDeleteDoctor = () => {
+  const hanldeDeleteDoctor = async () => {
     if (itemToDelete) {
-      dispatch(actionToDispatch(itemToDelete));
-      setDeleteConfirm(false);
+      try {
+        await dispatch(actionToDispatch(itemToDelete)).unwrap();
+        toast.success('Delete Appointment successfully');
+      } catch (error) {
+        toast.error('Delete Appointment Failed');
+      }
     } else {
       dispatch(actionToDispatch());
-      setDeleteConfirm(false);
       router.push('/auth/signin');
     }
   };

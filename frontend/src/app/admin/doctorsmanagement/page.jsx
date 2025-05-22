@@ -17,16 +17,20 @@ export default function DoctorsMangement() {
 
   const dispatch = useDispatch();
   const router = useRouter();
-
   const path = usePathname();
 
   useEffect(() => {
     dispatch(userStayLogged());
     dispatch(checkIsAdmin());
-    if (!theRole) {
-      router.push('/auth/signin');
-    }
   }, []);
+
+  useEffect(() => {
+    if (theRole) {
+      router.push(path);
+    } else {
+      router.push('/user/dashboard');
+    }
+  }, [theRole]);
 
   // Search doctor
 

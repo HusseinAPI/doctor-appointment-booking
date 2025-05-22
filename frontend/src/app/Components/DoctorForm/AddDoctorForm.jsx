@@ -1,6 +1,7 @@
 import React, { useRef } from 'react';
 import { useDispatch } from 'react-redux';
 import { addDoctor } from '@/app/redux/adminSlice';
+import { toast } from 'react-toastify';
 
 export default function AddDoctorForm({ addFormOpen, setAddFormOpen }) {
   const nameRef = useRef(null);
@@ -12,7 +13,7 @@ export default function AddDoctorForm({ addFormOpen, setAddFormOpen }) {
 
   const dispatch = useDispatch();
 
-  const handleSubmit = () => {
+  const handleSubmit = async () => {
     const doctorData = {
       name: nameRef.current.value,
       specialization: specializationRef.current.value,
@@ -31,8 +32,13 @@ export default function AddDoctorForm({ addFormOpen, setAddFormOpen }) {
       doctorData.imageUrl.length &&
       doctorData.bio.length
     ) {
-      dispatch(addDoctor(doctorData));
-      setAddFormOpen(false);
+      try {
+        await dispatch(addDoctor(doctorData)).unwrap();
+        toast.success('Add Doctor Successfully');
+        setAddFormOpen(false);
+      } catch (error) {
+        toast.error('Add Doctor Failed');
+      }
     }
   };
 

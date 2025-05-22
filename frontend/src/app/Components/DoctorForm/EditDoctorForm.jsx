@@ -1,6 +1,7 @@
 import React, { useRef } from 'react';
 import { useDispatch } from 'react-redux';
 import { editDoctor } from '@/app/redux/adminSlice';
+import { toast } from 'react-toastify';
 
 export default function EditDoctorForm({
   editFormOpen,
@@ -16,7 +17,7 @@ export default function EditDoctorForm({
 
   const dispatch = useDispatch();
 
-  const handleEditDoctor = () => {
+  const handleEditDoctor = async () => {
     const doctorData = {
       id: editableData.id,
       name: nameRef.current.value,
@@ -37,8 +38,14 @@ export default function EditDoctorForm({
       doctorData.imageUrl.length &&
       doctorData.bio.length
     ) {
-      dispatch(editDoctor(doctorData));
-      setEditFormOpen(false);
+      try {
+        await dispatch(editDoctor(doctorData)).unwrap();
+        toast.success('Edit Doctor Successfully');
+
+        setEditFormOpen(false);
+      } catch (error) {
+        toast.error('Edit Doctor Failed');
+      }
     }
   };
 

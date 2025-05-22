@@ -15,7 +15,6 @@ export default function AppointmentsMangement() {
 
   const dispatch = useDispatch();
   const router = useRouter();
-
   const path = usePathname();
 
   useEffect(() => {
@@ -23,10 +22,15 @@ export default function AppointmentsMangement() {
     dispatch(checkIsAdmin());
     dispatch(getDoctors());
     dispatch(fetchAppointments('all'));
-    if (!theRole) {
-      router.push('/auth/signin');
-    }
   }, []);
+
+  useEffect(() => {
+    if (theRole) {
+      router.push(path);
+    } else {
+      router.push('/user/dashboard');
+    }
+  }, [theRole]);
 
   // Search appointment
 

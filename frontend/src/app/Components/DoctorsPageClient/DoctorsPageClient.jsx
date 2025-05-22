@@ -18,11 +18,15 @@ const DoctorPageClient = ({ doctors }) => {
   useEffect(() => {
     dispatch(userStayLogged());
     dispatch(emptyAppointments());
-    if (!isLogged) {
-      localStorage.setItem('lastPath', path);
+  }, []);
+
+  useEffect(() => {
+    if (isLogged) {
+      router.push(path);
+    } else {
       router.push('/auth/signin');
     }
-  }, []);
+  }, [isLogged]);
 
   useEffect(() => {
     if (isLogged) {

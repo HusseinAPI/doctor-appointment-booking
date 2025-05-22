@@ -4,6 +4,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import Link from 'next/link';
 import { signIn } from '../../redux/userSlice';
 import { useRouter } from 'next/navigation';
+import { toast } from 'react-toastify';
 
 const SignIn = () => {
   const isLogged = useSelector((state) => state.userSlice.isLogged);
@@ -14,7 +15,7 @@ const SignIn = () => {
   const dispatch = useDispatch();
   const router = useRouter();
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
     const userInfo = {
       email: email.current?.value,
@@ -26,18 +27,22 @@ const SignIn = () => {
       userInfo.email.length > 0 &&
       userInfo.password.length > 0
     ) {
-      dispatch(signIn(userInfo));
-      email.current.value = '';
-      password.current.value = '';
+      try {
+        await dispatch(signIn(userInfo)).unwrap();
+        toast.success('Login successful!');
+        email.current.value = '';
+        password.current.value = '';
+      } catch (error) {
+        toast.error('Login failed!');
+      }
     }
   };
 
   useEffect(() => {
     if (isLogged) {
-      const lastPath = localStorage.getItem('lastPath');
-      router.push(lastPath);
+      router.push('/user/dashboard');
     }
-  }, [isLogged, router]);
+  }, [isLogged]);
 
   return (
     <div className="flex justify-center w-full my-20 p-8">

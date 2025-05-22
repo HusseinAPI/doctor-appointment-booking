@@ -5,8 +5,8 @@ import Image from 'next/image';
 import profImage from '../../../../public/about.png';
 import { useDispatch, useSelector } from 'react-redux';
 import { userStayLogged, fetchUserAppointments } from '@/app/redux/userSlice';
-import dayjs from 'dayjs';
 import { usePathname, useRouter } from 'next/navigation';
+import dayjs from 'dayjs';
 
 const Dashboard = () => {
   const isLogged = useSelector((state) => state.userSlice.isLogged);
@@ -32,11 +32,15 @@ const Dashboard = () => {
   useEffect(() => {
     dispatch(userStayLogged());
     dispatch(fetchUserAppointments());
-    if (!isLogged) {
-      localStorage.setItem('lastPath', path);
+  }, []);
+
+  useEffect(() => {
+    if (isLogged) {
+      router.push(path);
+    } else {
       router.push('/auth/signin');
     }
-  }, []);
+  }, [isLogged]);
 
   const previousAppointments = userAppointments.filter((app) =>
     dayjs(app.dateOfAppointment).isBefore(dayjs())

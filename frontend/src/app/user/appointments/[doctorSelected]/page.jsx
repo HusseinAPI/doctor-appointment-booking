@@ -27,11 +27,15 @@ export default function Page() {
   useEffect(() => {
     dispatch(userStayLogged());
     dispatch(getSelectedDoctor(pathDoctor));
-    if (!isLogged) {
-      localStorage.setItem('lastPath', path);
+  }, []);
+
+  useEffect(() => {
+    if (isLogged) {
+      router.push(path);
+    } else {
       router.push('/auth/signin');
     }
-  }, []);
+  }, [isLogged]);
 
   useEffect(() => {
     if (doctorSelected?.id) {

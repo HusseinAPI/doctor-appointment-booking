@@ -20,10 +20,13 @@ export default function Home() {
   useEffect(() => {
     dispatch(getDoctors());
     dispatch(userStayLogged());
-    if (!isLogged) {
+  }, []);
+
+  useEffect(() => {
+    if (isLogged) {
       router.push('/user/dashboard');
     }
-  }, []);
+  }, [isLogged]);
 
   return (
     <>

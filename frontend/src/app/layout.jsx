@@ -4,6 +4,7 @@ import './globals.css';
 import { Provider } from 'react-redux';
 import { store } from './redux/store';
 import Home from './Components/Home/Home';
+import { ToastContainer } from 'react-toastify';
 
 const geistSans = Geist({
   variable: '--font-geist-sans',
@@ -31,7 +32,10 @@ export default function RootLayout({ children }) {
               ' "General Sans", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol"',
           }}
         >
-          <Home>{children}</Home>
+          <Home>
+            {children}
+            <ToastContainer />
+          </Home>
         </body>
       </Provider>
     </html>

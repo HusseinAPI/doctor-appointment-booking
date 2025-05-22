@@ -17,11 +17,15 @@ export default function Profile() {
   useEffect(() => {
     dispatch(userStayLogged());
     dispatch(getUserInfo());
-    if (!isLogged) {
-      localStorage.setItem('lastPath', path);
+  }, []);
+
+  useEffect(() => {
+    if (isLogged) {
+      router.push(path);
+    } else {
       router.push('/auth/signin');
     }
-  }, []);
+  }, [isLogged]);
 
   // LogOut
 

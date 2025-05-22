@@ -1,6 +1,7 @@
 import React from 'react';
 import { useDispatch } from 'react-redux';
 import { deleteDoctor } from '@/app/redux/adminSlice';
+import { toast } from 'react-toastify';
 
 export default function ConfirmDeletePopup({
   deleteConfirm,
@@ -9,13 +10,18 @@ export default function ConfirmDeletePopup({
 }) {
   const dispatch = useDispatch();
 
-  const hanldeDeleteDoctor = () => {
+  const hanldeDeleteDoctor = async () => {
     const doctorId = {
       id: doctorToDelete,
     };
 
     if (doctorId.id) {
-      dispatch(deleteDoctor(doctorId));
+      try {
+        await dispatch(deleteDoctor(doctorId)).unwrap();
+        toast.success('Delete Doctor Successfully');
+      } catch (error) {
+        toast.error('Delete Doctor Failed');
+      }
     }
   };
 
